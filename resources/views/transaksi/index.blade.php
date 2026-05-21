@@ -54,7 +54,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $transaksis->links() }}
+        {{ $transaksis->links('pagination::bootstrap-4') }}
     </div>
 </div>
 @endsection

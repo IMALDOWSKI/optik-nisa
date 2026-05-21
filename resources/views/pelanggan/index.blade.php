@@ -46,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $pelanggans->links() }}
+        {{ $pelanggans->links('pagination::bootstrap-4') }}
     </div>
 </div>
 @endsection
