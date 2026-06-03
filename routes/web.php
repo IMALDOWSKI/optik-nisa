@@ -4,9 +4,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\ResepMataController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ResepMataController;
+
 
 // Redirect root ke dashboard
 Route::get('/', function () {
@@ -18,14 +19,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard - semua role bisa akses
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+  
 
-    // Resep Mata
-    Route::resource('resep', ResepMataController::class);
-
-    // Pelanggan, Produk, Transaksi - semua role bisa akses
+    // Pelanggan, Produk, Transaksi, Resep Mata - semua role bisa akses
     Route::resource('pelanggan', PelangganController::class);
     Route::resource('produk', ProdukController::class);
     Route::resource('transaksi', TransaksiController::class);
+    Route::resource('resep', ResepMataController::class);
 
     // Khusus Admin saja
     Route::middleware(['role:admin'])->group(function () {

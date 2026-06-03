@@ -53,6 +53,12 @@
             </a>
         </li>
 
+        <li class="nav-item {{ Request::is('resep*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('resep.index') }}">
+        <i class="fas fa-fw fa-eye"></i><span>Resep Mata</span>
+    </a>
+</li>
+
         @if(auth()->user()->role == 'admin')
         <hr class="sidebar-divider">
         <div class="sidebar-heading">Pengaturan</div>
@@ -70,11 +76,7 @@
         </div>
 
 
-        <li class="nav-item {{ Request::is('resep*') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('resep.index') }}">
-        <i class="fas fa-fw fa-eye"></i><span>Resep Mata</span>
-    </a>
-</li>
+        
 
     </ul>
     <!-- End Sidebar -->
