@@ -6,6 +6,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResepMataController;
 
 // Redirect root ke dashboard
 Route::get('/', function () {
@@ -17,6 +18,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard - semua role bisa akses
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Resep Mata
+    Route::resource('resep', ResepMataController::class);
 
     // Pelanggan, Produk, Transaksi - semua role bisa akses
     Route::resource('pelanggan', PelangganController::class);

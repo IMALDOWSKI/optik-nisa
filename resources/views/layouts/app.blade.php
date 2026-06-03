@@ -69,6 +69,13 @@
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
 
+
+        <li class="nav-item {{ Request::is('resep*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('resep.index') }}">
+        <i class="fas fa-fw fa-eye"></i><span>Resep Mata</span>
+    </a>
+</li>
+
     </ul>
     <!-- End Sidebar -->
 
