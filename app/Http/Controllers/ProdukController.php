@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-    public function index()
-    {
-        $produks = Produk::latest()->paginate(10);
-        return view('produk.index', compact('produks'));
+public function index()
+{
+    $query = Produk::latest();
+
+    // Filter berdasarkan kategori
+    if (request('kategori')) {
+        $query->where('kategori', request('kategori'));
     }
 
-    public function create()
-    {
-        return view('produk.create');
-    }
-
+    $produks = $query->paginate(10);
+    return view('produk.index', compact('produks'));
+}
     public function store(Request $request)
     {
         $request->validate([
@@ -27,8 +28,16 @@ class ProdukController extends Controller
             'stok'        => 'required|integer',
         ]);
 
-        Produk::create($request->all());
+        $data = $request->all();
+        $data['kode_produk'] = Produk::generateKode($request->kategori);
+
+        Produk::create($data);
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
+    }
+
+    public function show(Produk $produk)
+    {
+        return view('produk.show', compact('produk'));
     }
 
     public function edit(Produk $produk)

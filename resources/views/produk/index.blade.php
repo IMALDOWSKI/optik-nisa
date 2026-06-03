@@ -8,25 +8,49 @@
     </a>
 </div>
 
+<!-- Filter Kategori -->
+<!-- Filter Kategori -->
+<div class="card shadow mb-3">
+    <div class="card-body py-2">
+        <a href="{{ route('produk.index') }}" 
+           class="btn btn-sm {{ !request('kategori') ? 'btn-primary' : 'btn-outline-primary' }}">
+           Semua
+        </a>
+        <a href="{{ route('produk.index', ['kategori' => 'kacamata']) }}" 
+           class="btn btn-sm {{ request('kategori') == 'kacamata' ? 'btn-primary' : 'btn-outline-primary' }}">
+           Frame
+        </a>
+        <a href="{{ route('produk.index', ['kategori' => 'lensa']) }}" 
+           class="btn btn-sm {{ request('kategori') == 'lensa' ? 'btn-success' : 'btn-outline-success' }}">
+           Lensa
+        </a>
+        <a href="{{ route('produk.index', ['kategori' => 'aksesoris']) }}" 
+           class="btn btn-sm {{ request('kategori') == 'aksesoris' ? 'btn-secondary' : 'btn-outline-secondary' }}">
+           Aksesoris
+        </a>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th>No</th>
+                        <th>Kode</th>
                         <th>Nama Produk</th>
                         <th>Kategori</th>
                         <th>Merk</th>
                         <th>Harga</th>
                         <th>Stok</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($produks as $i => $p)
+                    @foreach($produks as $p)
                     <tr>
-                        <td>{{ $produks->firstItem() + $i }}</td>
+                        <td><code>{{ $p->kode_produk }}</code></td>
                         <td>{{ $p->nama_produk }}</td>
                         <td>
                             <span class="badge badge-{{ $p->kategori == 'kacamata' ? 'primary' : ($p->kategori == 'lensa' ? 'success' : 'secondary') }}">
@@ -36,18 +60,26 @@
                         <td>{{ $p->merk ?? '-' }}</td>
                         <td>Rp {{ number_format($p->harga, 0, ',', '.') }}</td>
                         <td>
-                            <span class="badge badge-{{ $p->stok > 10 ? 'success' : 'danger' }}">
+                            <span class="badge badge-{{ $p->stok > 10 ? 'success' : ($p->stok > 0 ? 'warning' : 'danger') }}">
                                 {{ $p->stok }}
                             </span>
                         </td>
                         <td>
+                            <span class="badge badge-{{ $p->status == 'aktif' ? 'success' : 'danger' }}">
+                                {{ ucfirst($p->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ route('produk.show', $p) }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i>
+                            </a>
                             <a href="{{ route('produk.edit', $p) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('produk.destroy', $p) }}" method="POST" style="display:inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
-                                    <i class="fas fa-trash"></i> Hapus
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </td>
