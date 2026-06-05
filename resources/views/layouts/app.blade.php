@@ -59,21 +59,22 @@
     </a>
 </li>
 
-        @if(auth()->user()->role == 'admin')
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">Pengaturan</div>
-
-        <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('user.index') }}">
-                <i class="fas fa-fw fa-user-cog"></i><span>Manajemen User</span>
-            </a>
-        </li>
-        @endif
-
-        <hr class="sidebar-divider d-none d-md-block">
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+@if(auth()->user()->role == 'admin')
+<hr class="sidebar-divider">
+<div class="sidebar-heading">Laporan</div>
+<li class="nav-item {{ Request::is('laporan*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laporan.index') }}">
+        <i class="fas fa-fw fa-chart-bar"></i><span>Laporan Transaksi</span>
+    </a>
+</li>
+<hr class="sidebar-divider">
+<div class="sidebar-heading">Pengaturan</div>
+<li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('user.index') }}">
+        <i class="fas fa-fw fa-user-cog"></i><span>Manajemen User</span>
+    </a>
+</li>
+@endif
 
 
         
