@@ -25,59 +25,61 @@ class TransaksiController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'pelanggan_id'      => 'required',
-        'tanggal_transaksi' => 'required|date',
-        'metode_bayar'      => 'required',
-        'produk_id'         => 'required|array|min:1',
-        'produk_id.*'       => 'required|exists:produks,id',
-        'jumlah'            => 'required|array|min:1',
-        'jumlah.*'          => 'required|integer|min:1',
-    ]);
-
-    DB::transaction(function () use ($request) {
-        $total = 0;
-        foreach ($request->produk_id as $i => $produkId) {
-            $produk  = Produk::find($produkId);
-            $jumlah  = $request->jumlah[$i];
-            $total  += $produk->harga * $jumlah;
-        }
-
-        $bayar     = $request->bayar ?? $total;
-        $kembalian = $bayar - $total;
-
-        $transaksi = Transaksi::create([
-            'kode_transaksi'    => Transaksi::generateKode(),
-            'pelanggan_id'      => $request->pelanggan_id,
-            'total_harga'       => $total,
-            'metode_bayar'      => $request->metode_bayar,
-            'bayar'             => $bayar,
-            'kembalian'         => $kembalian,
-            'tanggal_transaksi' => $request->tanggal_transaksi,
-            'status'            => 'selesai',
-            'catatan'           => $request->catatan,
+    {
+        $request->validate([
+            'pelanggan_id'      => 'required|exists:pelanggans,id',
+            'tanggal_transaksi' => 'required|date',
+            'metode_bayar'      => 'required',
+            'produk_id'         => 'required|array|min:1',
+            'produk_id.*'       => 'required|exists:produks,id',
+            'jumlah'            => 'required|array|min:1',
+            'jumlah.*'          => 'required|integer|min:1',
         ]);
 
-        foreach ($request->produk_id as $i => $produkId) {
-            $produk   = Produk::find($produkId);
-            $jumlah   = $request->jumlah[$i];
-            $subtotal = $produk->harga * $jumlah;
+        DB::transaction(function () use ($request) {
+            $total = 0;
 
-            DetailTransaksi::create([
-                'transaksi_id' => $transaksi->id,
-                'produk_id'    => $produkId,
-                'jumlah'       => $jumlah,
-                'harga_satuan' => $produk->harga,
-                'subtotal'     => $subtotal,
+            foreach ($request->produk_id as $i => $produkId) {
+                $produk = Produk::find($produkId);
+                $jumlah = $request->jumlah[$i];
+                $total += $produk->harga * $jumlah;
+            }
+
+            $bayar     = $request->bayar ?? $total;
+            $kembalian = $bayar - $total;
+
+            $transaksi = Transaksi::create([
+                'kode_transaksi'    => Transaksi::generateKode(),
+                'pelanggan_id'      => $request->pelanggan_id,
+                'total_harga'       => $total,
+                'metode_bayar'      => $request->metode_bayar,
+                'bayar'             => $bayar,
+                'kembalian'         => $kembalian,
+                'tanggal_transaksi' => $request->tanggal_transaksi,
+                'status'            => 'selesai',
+                'catatan'           => $request->catatan,
             ]);
 
-            $produk->decrement('stok', $jumlah);
-        }
-    });
+            foreach ($request->produk_id as $i => $produkId) {
+                $produk   = Produk::find($produkId);
+                $jumlah   = $request->jumlah[$i];
+                $subtotal = $produk->harga * $jumlah;
 
-    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan!');
-}
+                DetailTransaksi::create([
+                    'transaksi_id' => $transaksi->id,
+                    'produk_id'    => $produkId,
+                    'jumlah'       => $jumlah,
+                    'harga_satuan' => $produk->harga,
+                    'subtotal'     => $subtotal,
+                ]);
+
+                $produk->decrement('stok', $jumlah);
+            }
+        });
+
+        return redirect()->route('transaksi.index')
+                         ->with('success', 'Transaksi berhasil disimpan!');
+    }
 
     public function show(Transaksi $transaksi)
     {
@@ -88,13 +90,13 @@ class TransaksiController extends Controller
     public function destroy(Transaksi $transaksi)
     {
         DB::transaction(function () use ($transaksi) {
-            // Kembalikan stok
             foreach ($transaksi->details as $detail) {
                 $detail->produk->increment('stok', $detail->jumlah);
             }
             $transaksi->delete();
         });
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus!');
+        return redirect()->route('transaksi.index')
+                         ->with('success', 'Transaksi berhasil dihapus!');
     }
 }
