@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard - semua role bisa akses
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
   
+    Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
 
     // Pelanggan, Produk, Transaksi, Resep Mata - semua role bisa akses
     Route::resource('pelanggan', PelangganController::class);

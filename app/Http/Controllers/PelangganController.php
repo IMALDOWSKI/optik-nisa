@@ -7,6 +7,28 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+    public function ajaxStore(Request $request)
+{
+    $request->validate([
+        'nama'       => 'required',
+        'no_telepon' => 'required',
+        'alamat'     => 'required',
+    ]);
+
+    $pelanggan = Pelanggan::create([
+        'nama'       => $request->nama,
+        'no_telepon' => $request->no_telepon,
+        'email'      => $request->email,
+        'alamat'     => $request->alamat,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'id'      => $pelanggan->id,
+        'nama'    => $pelanggan->nama,
+    ]);
+}
+
     public function index()
     {
         $pelanggans = Pelanggan::latest()->paginate(10);
