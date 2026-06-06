@@ -3,28 +3,39 @@
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Transaksi</h1>
-    <a href="{{ route('transaksi.index') }}" class="btn btn-secondary btn-sm">
-        <i class="fas fa-arrow-left"></i> Kembali
-    </a>
+    <div>
+        <a href="{{ route('transaksi.struk', $transaksi) }}"
+           class="btn btn-success btn-sm shadow-sm mr-2" target="_blank">
+            <i class="fas fa-print"></i> Cetak Struk
+        </a>
+        <a href="{{ route('transaksi.index') }}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
+    </div>
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">{{ $transaksi->kode_transaksi }}</h6>
-        <span class="badge badge-{{ $transaksi->status == 'selesai' ? 'success' : 'warning' }}">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-receipt mr-2"></i>{{ $transaksi->kode_transaksi }}
+        </h6>
+        <span class="badge badge-{{ $transaksi->status == 'selesai' ? 'success' : ($transaksi->status == 'pending' ? 'warning' : 'danger') }}">
             {{ ucfirst($transaksi->status) }}
         </span>
     </div>
     <div class="card-body">
-        <div class="row mb-3">
+        <div class="row mb-4">
             <div class="col-md-4">
-                <strong>Pelanggan:</strong> {{ $transaksi->pelanggan->nama }}
+                <small class="text-muted d-block">Pelanggan</small>
+                <strong>{{ $transaksi->pelanggan->nama }}</strong>
             </div>
             <div class="col-md-4">
-                <strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d/m/Y') }}
+                <small class="text-muted d-block">Tanggal Transaksi</small>
+                <strong>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d/m/Y') }}</strong>
             </div>
             <div class="col-md-4">
-                <strong>Metode Bayar:</strong> {{ ucfirst($transaksi->metode_bayar) }}
+                <small class="text-muted d-block">Metode Pembayaran</small>
+                <strong>{{ ucfirst($transaksi->metode_bayar) }}</strong>
             </div>
         </div>
 
@@ -49,7 +60,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="bg-light">
                         <th colspan="3" class="text-right">Total</th>
                         <th>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</th>
                     </tr>
@@ -68,8 +79,12 @@
         </div>
 
         @if($transaksi->catatan)
-        <p><strong>Catatan:</strong> {{ $transaksi->catatan }}</p>
+        <div class="mt-3">
+            <small class="text-muted d-block">Catatan</small>
+            <p>{{ $transaksi->catatan }}</p>
+        </div>
         @endif
+
     </div>
 </div>
 @endsection

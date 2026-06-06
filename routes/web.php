@@ -21,7 +21,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
 
     Route::resource('produk', ProdukController::class);
+
     Route::resource('transaksi', TransaksiController::class);
+    Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->name('transaksi.struk');
+
     Route::resource('resep', ResepMataController::class);
 
     Route::middleware(['role:admin'])->group(function () {

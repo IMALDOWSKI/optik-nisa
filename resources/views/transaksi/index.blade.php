@@ -39,12 +39,19 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('transaksi.show', $t) }}" class="btn btn-info btn-sm">
+                            <a href="{{ route('transaksi.show', $t) }}"
+                               class="btn btn-info btn-sm" title="Detail">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <form action="{{ route('transaksi.destroy', $t) }}" method="POST" style="display:inline">
+                            <a href="{{ route('transaksi.struk', $t) }}"
+                               class="btn btn-success btn-sm" target="_blank" title="Cetak Struk">
+                                <i class="fas fa-print"></i>
+                            </a>
+                            <form action="{{ route('transaksi.destroy', $t) }}"
+                                  method="POST" style="display:inline">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus? Stok akan dikembalikan!')">
+                                <button class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin hapus? Stok akan dikembalikan!')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

@@ -87,6 +87,16 @@ class TransaksiController extends Controller
         return view('transaksi.show', compact('transaksi'));
     }
 
+    public function struk(Transaksi $transaksi)
+    {
+        $transaksi->load(['pelanggan', 'details.produk']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('transaksi.struk', compact('transaksi'))
+                ->setPaper([0, 0, 226.77, 500], 'portrait');
+
+        return $pdf->stream('struk-' . $transaksi->kode_transaksi . '.pdf');
+    }
+
     public function destroy(Transaksi $transaksi)
     {
         DB::transaction(function () use ($transaksi) {
