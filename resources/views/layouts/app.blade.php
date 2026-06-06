@@ -231,6 +231,17 @@
             </a>
         </li>
 
+        <li class="nav-item {{ Request::is('notifikasi*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('notifikasi.index') }}">
+        <i class="fas fa-fw fa-bell"></i>
+        <span>Notifikasi</span>
+        @php $notifCount = \App\Models\Notifikasi::where('sudah_dibaca', false)->count(); @endphp
+        @if($notifCount > 0)
+            <span class="badge badge-danger ml-1">{{ $notifCount }}</span>
+        @endif
+    </a>
+</li>
+
         @if(auth()->user()->role == 'admin')
         <hr class="sidebar-divider">
         <div class="sidebar-heading">Laporan</div>
@@ -273,41 +284,51 @@
                 <ul class="navbar-nav ml-auto">
 
                     <!-- Notifikasi Stok -->
-                    @php $stokKritis = \App\Models\Produk::where('stok', '<=', 5)->count(); @endphp
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-                           role="button" data-toggle="dropdown">
-                            <i class="fas fa-bell fa-fw"></i>
-                            @if($stokKritis > 0)
-                                <span class="badge badge-danger badge-counter">{{ $stokKritis }}</span>
-                            @endif
-                        </a>
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
-                            <h6 class="dropdown-header"
-                                style="background: linear-gradient(135deg, #1a3a5c, #2d5f8a);">
-                                Peringatan Stok
-                            </h6>
-                            @forelse(\App\Models\Produk::where('stok','<=',5)->get() as $s)
-                                <a class="dropdown-item d-flex align-items-center"
-                                   href="{{ route('produk.index') }}">
-                                    <div class="mr-3">
-                                        <span class="badge badge-{{ $s->stok == 0 ? 'danger' : 'warning' }}">
-                                            {{ $s->stok }}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">Stok Menipis</div>
-                                        <span class="font-weight-bold">{{ $s->nama_produk }}</span>
-                                    </div>
-                                </a>
-                            @empty
-                                <div class="dropdown-item text-center text-muted py-3">
-                                    <i class="fas fa-check-circle text-success mr-1"></i>
-                                    Semua stok aman!
-                                </div>
-                            @endforelse
-                        </div>
-                    </li>
+@php
+    $belumDibacaCount = \App\Models\Notifikasi::where('sudah_dibaca', false)->count();
+@endphp
+<li class="nav-item dropdown no-arrow mx-1">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
+       role="button" data-toggle="dropdown">
+        <i class="fas fa-bell fa-fw"></i>
+        @if($belumDibacaCount > 0)
+            <span class="badge badge-danger badge-counter">{{ $belumDibacaCount }}</span>
+        @endif
+    </a>
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
+        <h6 class="dropdown-header"
+            style="background: linear-gradient(135deg, #1a3a5c, #2d5f8a);">
+            Notifikasi
+        </h6>
+        @forelse(\App\Models\Notifikasi::where('sudah_dibaca', false)->latest()->take(5)->get() as $n)
+            <a class="dropdown-item d-flex align-items-center"
+               href="{{ route('notifikasi.index') }}">
+                <div class="mr-3">
+                    <div class="rounded-circle p-2
+                        {{ $n->tipe == 'stok' ? 'bg-warning' : ($n->tipe == 'pelanggan' ? 'bg-info' : 'bg-primary') }}
+                        text-white"
+                        style="width:35px; height:35px; display:flex;
+                               align-items:center; justify-content:center;">
+                        <i class="fas fa-{{ $n->tipe == 'stok' ? 'box' : ($n->tipe == 'pelanggan' ? 'user' : 'bell') }} fa-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="small text-gray-500">{{ $n->created_at->diffForHumans() }}</div>
+                    <span class="font-weight-bold small">{{ $n->judul }}</span>
+                </div>
+            </a>
+        @empty
+            <div class="dropdown-item text-center text-muted py-3">
+                <i class="fas fa-bell-slash mr-1"></i>
+                Tidak ada notifikasi baru
+            </div>
+        @endforelse
+        <a class="dropdown-item text-center small text-gray-500"
+           href="{{ route('notifikasi.index') }}">
+            Lihat Semua Notifikasi
+        </a>
+    </div>
+</li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 

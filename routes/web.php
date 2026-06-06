@@ -7,6 +7,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ResepMataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotifikasiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::post('/notifikasi/{notifikasi}/baca', [NotifikasiController::class, 'tandaiBaca'])->name('notifikasi.baca');
+    Route::post('/notifikasi/baca-semua', [NotifikasiController::class, 'tandaiSemuaBaca'])->name('notifikasi.baca-semua');
+    Route::delete('/notifikasi/{notifikasi}/hapus', [NotifikasiController::class, 'hapus'])->name('notifikasi.hapus');
+    Route::delete('/notifikasi/hapus-semua', [NotifikasiController::class, 'hapusSemua'])->name('notifikasi.hapus-semua');
+    
 
     Route::get('/pelanggan/{pelanggan}/riwayat', [PelangganController::class, 'riwayat'])->name('pelanggan.riwayat');
 
