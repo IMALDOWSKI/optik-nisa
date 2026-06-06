@@ -37,3 +37,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+use App\Http\Controllers\ProfileController;
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::put('/profile/ganti-password', [ProfileController::class, 'gantiPassword'])->name('profile.ganti-password');
