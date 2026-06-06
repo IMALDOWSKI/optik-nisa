@@ -34,6 +34,10 @@
                             <a href="{{ route('pelanggan.edit', $p) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
+                            <a href="{{ route('pelanggan.riwayat', $p) }}"
+   class="btn btn-info btn-sm" title="Riwayat">
+    <i class="fas fa-history"></i>
+</a>
                             <form action="{{ route('pelanggan.destroy', $p) }}" method="POST" style="display:inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">

@@ -7,6 +7,27 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+
+    public function riwayat(Pelanggan $pelanggan)
+{
+    $transaksis = $pelanggan->transaksis()
+                    ->with('details.produk')
+                    ->latest()
+                    ->get();
+
+    $resepMatas = $pelanggan->resepMatas()
+                    ->latest()
+                    ->get();
+
+    $totalBelanja = $transaksis->sum('total_harga');
+
+    return view('pelanggan.riwayat', compact(
+        'pelanggan',
+        'transaksis',
+        'resepMatas',
+        'totalBelanja'
+    ));
+}
     public function ajaxStore(Request $request)
 {
     $request->validate([

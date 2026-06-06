@@ -15,6 +15,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/pelanggan/{pelanggan}/riwayat', [PelangganController::class, 'riwayat'])->name('pelanggan.riwayat');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('pelanggan', PelangganController::class);
