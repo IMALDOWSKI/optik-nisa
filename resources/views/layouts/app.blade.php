@@ -229,6 +229,13 @@
                 <span>Transaksi</span>
             </a>
         </li>
+        
+        <li class="nav-item {{ Request::is('garansi*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('garansi.index') }}">
+        <i class="fas fa-fw fa-shield-alt"></i>
+        <span>Garansi</span>
+    </a>
+</li>
 
         <li class="nav-item {{ Request::is('resep*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('resep.index') }}">
