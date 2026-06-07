@@ -47,6 +47,10 @@
                                class="btn btn-success btn-sm" target="_blank" title="Cetak Struk">
                                 <i class="fas fa-print"></i>
                             </a>
+                            <a href="{{ route('transaksi.edit', $t) }}"
+   class="btn btn-warning btn-sm" title="Edit">
+    <i class="fas fa-edit"></i>
+</a>
                             <form action="{{ route('transaksi.destroy', $t) }}"
                                   method="POST" style="display:inline">
                                 @csrf @method('DELETE')
