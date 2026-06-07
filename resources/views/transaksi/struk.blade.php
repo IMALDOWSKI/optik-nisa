@@ -142,28 +142,38 @@
     @endforeach
 
     {{-- Total --}}
-    <div class="total-section">
-        <table>
-            <tr class="grand-total">
-                <td><strong>TOTAL</strong></td>
-                <td><strong>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</strong></td>
-            </tr>
-            <tr>
-                <td>Metode Bayar</td>
-                <td>{{ ucfirst($transaksi->metode_bayar) }}</td>
-            </tr>
-            @if($transaksi->metode_bayar == 'tunai')
-            <tr>
-                <td>Bayar</td>
-                <td>Rp {{ number_format($transaksi->bayar, 0, ',', '.') }}</td>
-            </tr>
-            <tr>
-                <td>Kembali</td>
-                <td>Rp {{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
-            </tr>
-            @endif
-        </table>
-    </div>
+<div class="total-section">
+    <table>
+        <tr>
+            <td>Subtotal</td>
+            <td>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
+        </tr>
+        @if($transaksi->diskon > 0)
+        <tr>
+            <td>Diskon</td>
+            <td>- Rp {{ number_format($transaksi->diskon, 0, ',', '.') }}</td>
+        </tr>
+        @endif
+        <tr class="grand-total">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>Rp {{ number_format($transaksi->grand_total > 0 ? $transaksi->grand_total : $transaksi->total_harga, 0, ',', '.') }}</strong></td>
+        </tr>
+        <tr>
+            <td>Metode Bayar</td>
+            <td>{{ ucfirst($transaksi->metode_bayar) }}</td>
+        </tr>
+        @if($transaksi->metode_bayar == 'tunai')
+        <tr>
+            <td>Bayar</td>
+            <td>Rp {{ number_format($transaksi->bayar, 0, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td>Kembali</td>
+            <td>Rp {{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
+        </tr>
+        @endif
+    </table>
+</div>
 
     {{-- Catatan --}}
     @if($transaksi->catatan)

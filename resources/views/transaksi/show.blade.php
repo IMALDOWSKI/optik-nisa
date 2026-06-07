@@ -64,20 +64,32 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr class="bg-light">
-                        <th colspan="3" class="text-right">Total</th>
-                        <th>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</th>
-                    </tr>
-                    @if($transaksi->metode_bayar == 'tunai')
-                    <tr>
-                        <td colspan="3" class="text-right">Bayar</td>
-                        <td>Rp {{ number_format($transaksi->bayar, 0, ',', '.') }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="text-right">Kembalian</td>
-                        <td>Rp {{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
-                    </tr>
-                    @endif
+<tfoot>
+    <tr class="bg-light">
+        <th colspan="3" class="text-right">Subtotal</th>
+        <th>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</th>
+    </tr>
+    @if($transaksi->diskon > 0)
+    <tr class="text-danger">
+        <td colspan="3" class="text-right">Diskon</td>
+        <td>- Rp {{ number_format($transaksi->diskon, 0, ',', '.') }}</td>
+    </tr>
+    @endif
+    <tr class="bg-primary text-white">
+        <th colspan="3" class="text-right">Grand Total</th>
+        <th>Rp {{ number_format($transaksi->grand_total, 0, ',', '.') }}</th>
+    </tr>
+    @if($transaksi->metode_bayar == 'tunai')
+    <tr>
+        <td colspan="3" class="text-right">Bayar</td>
+        <td>Rp {{ number_format($transaksi->bayar, 0, ',', '.') }}</td>
+    </tr>
+    <tr>
+        <td colspan="3" class="text-right">Kembalian</td>
+        <td>Rp {{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
+    </tr>
+    @endif
+</tfoot>
                 </tfoot>
             </table>
         </div>

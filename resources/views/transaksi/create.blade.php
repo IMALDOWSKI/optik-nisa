@@ -132,6 +132,34 @@
                     </select>
                 </div>
 
+                {{-- Diskon --}}
+<div class="form-group">
+    <label class="font-weight-bold">Diskon</label>
+    <div class="input-group">
+        <select name="tipe_diskon" id="tipeDiskon" class="form-control" style="max-width:110px">
+            <option value="nominal">Nominal</option>
+            <option value="persen">Persen (%)</option>
+        </select>
+        <input type="number" name="diskon" id="inputDiskon"
+               class="form-control" placeholder="0" min="0">
+        <div class="input-group-append">
+            <span class="input-group-text" id="satuanDiskon">Rp</span>
+        </div>
+    </div>
+</div>
+
+{{-- Grand Total --}}
+<div class="form-group">
+    <label class="font-weight-bold">Grand Total</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Rp</span>
+        </div>
+        <input type="text" id="grandTotalFinal"
+               class="form-control bg-light font-weight-bold"
+               readonly placeholder="0">
+    </div>
+</div>
                 {{-- Info Bayar (hanya muncul kalau Tunai) --}}
                 <div id="infoBayar">
                     <div class="form-group">
@@ -239,24 +267,41 @@ function hitungTotal() {
         const jumlah  = parseFloat(row.querySelector('.jumlah-input').value) || 0;
         const harga   = parseFloat(select.options[select.selectedIndex]?.dataset.harga) || 0;
         const sub     = harga * jumlah;
-
         row.querySelector('.subtotal-input').value = sub > 0
-            ? 'Rp ' + sub.toLocaleString('id-ID')
-            : '';
-
+            ? 'Rp ' + sub.toLocaleString('id-ID') : '';
         total += sub;
     });
 
-    document.getElementById('grandTotal').innerText = 'Rp ' + total.toLocaleString('id-ID');
+    // Hitung diskon
+    const tipeDiskon  = document.getElementById('tipeDiskon').value;
+    const nilaiDiskon = parseFloat(document.getElementById('inputDiskon').value) || 0;
+    let diskon = 0;
 
-    // Hitung kembalian kalau tunai
+    if (tipeDiskon === 'persen') {
+        diskon = total * (nilaiDiskon / 100);
+    } else {
+        diskon = nilaiDiskon;
+    }
+
+    const grandTotal = total - diskon;
+
+    document.getElementById('grandTotal').innerText =
+        'Rp ' + total.toLocaleString('id-ID');
+    document.getElementById('grandTotalFinal').value =
+        grandTotal.toLocaleString('id-ID');
+
+    // Hitung kembalian
     const bayar     = parseFloat(document.getElementById('inputBayar').value) || 0;
-    const kembalian = bayar - total;
+    const kembalian = bayar - grandTotal;
     document.getElementById('inputKembalian').value = kembalian >= 0
-        ? kembalian.toLocaleString('id-ID')
-        : '0';
+        ? kembalian.toLocaleString('id-ID') : '0';
 }
-
+    // Update satuan diskon
+document.getElementById('tipeDiskon').addEventListener('change', function() {
+    document.getElementById('satuanDiskon').innerText =
+        this.value === 'persen' ? '%' : 'Rp';
+    hitungTotal();
+});
 // ================================================
 // BIND EVENTS KE SATU BARIS PRODUK
 // ================================================
