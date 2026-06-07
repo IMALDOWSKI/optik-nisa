@@ -8,6 +8,7 @@ use App\Http\Controllers\ResepMataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\RestokController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('restok', RestokController::class)->only(['index', 'create', 'store', 'show']);
     
     Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
     Route::post('/notifikasi/{notifikasi}/baca', [NotifikasiController::class, 'tandaiBaca'])->name('notifikasi.baca');

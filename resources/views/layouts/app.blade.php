@@ -216,6 +216,12 @@
                 <span>Produk</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('restok*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('restok.index') }}">
+        <i class="fas fa-fw fa-boxes"></i>
+        <span>Restok Produk</span>
+    </a>
+</li>
 
         <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
