@@ -10,6 +10,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\RestokController;
 use App\Http\Controllers\GaransiController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('supplier', SupplierController::class);
     Route::resource('garansi', GaransiController::class)->only(['index', 'create', 'store', 'show']);
 Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->name('garansi.klaim');
     Route::resource('restok', RestokController::class)->only(['index', 'create', 'store', 'show']);

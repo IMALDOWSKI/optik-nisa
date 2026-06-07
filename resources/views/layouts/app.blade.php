@@ -223,13 +223,20 @@
     </a>
 </li>
 
+<li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('supplier.index') }}">
+        <i class="fas fa-fw fa-truck"></i>
+        <span>Supplier</span>
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
                 <i class="fas fa-fw fa-shopping-cart"></i>
                 <span>Transaksi</span>
             </a>
         </li>
-        
+
         <li class="nav-item {{ Request::is('garansi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('garansi.index') }}">
         <i class="fas fa-fw fa-shield-alt"></i>
