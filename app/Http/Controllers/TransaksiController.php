@@ -87,6 +87,81 @@ class TransaksiController extends Controller
         return view('transaksi.show', compact('transaksi'));
     }
 
+    public function edit(Transaksi $transaksi)
+{
+    $transaksi->load(['pelanggan', 'details.produk']);
+    $pelanggans = Pelanggan::orderBy('nama')->get();
+    $produks    = Produk::where('status', 'aktif')->get();
+    return view('transaksi.edit', compact('transaksi', 'pelanggans', 'produks'));
+}
+
+public function update(Request $request, Transaksi $transaksi)
+{
+    $request->validate([
+        'pelanggan_id'      => 'required|exists:pelanggans,id',
+        'tanggal_transaksi' => 'required|date',
+        'metode_bayar'      => 'required',
+        'produk_id'         => 'required|array|min:1',
+        'produk_id.*'       => 'required|exists:produks,id',
+        'jumlah'            => 'required|array|min:1',
+        'jumlah.*'          => 'required|integer|min:1',
+    ]);
+
+    DB::transaction(function () use ($request, $transaksi) {
+
+        // Kembalikan stok lama dulu
+        foreach ($transaksi->details as $detail) {
+            $detail->produk->increment('stok', $detail->jumlah);
+        }
+
+        // Hapus detail lama
+        $transaksi->details()->delete();
+
+        // Hitung total baru
+        $total = 0;
+        foreach ($request->produk_id as $i => $produkId) {
+            $produk  = Produk::find($produkId);
+            $jumlah  = $request->jumlah[$i];
+            $total  += $produk->harga * $jumlah;
+        }
+
+        $bayar     = $request->bayar ?? $total;
+        $kembalian = $bayar - $total;
+
+        // Update header transaksi
+        $transaksi->update([
+            'pelanggan_id'      => $request->pelanggan_id,
+            'total_harga'       => $total,
+            'metode_bayar'      => $request->metode_bayar,
+            'bayar'             => $bayar,
+            'kembalian'         => $kembalian,
+            'tanggal_transaksi' => $request->tanggal_transaksi,
+            'status'            => $request->status ?? 'selesai',
+            'catatan'           => $request->catatan,
+        ]);
+
+        // Simpan detail baru & kurangi stok
+        foreach ($request->produk_id as $i => $produkId) {
+            $produk   = Produk::find($produkId);
+            $jumlah   = $request->jumlah[$i];
+            $subtotal = $produk->harga * $jumlah;
+
+            DetailTransaksi::create([
+                'transaksi_id' => $transaksi->id,
+                'produk_id'    => $produkId,
+                'jumlah'       => $jumlah,
+                'harga_satuan' => $produk->harga,
+                'subtotal'     => $subtotal,
+            ]);
+
+            $produk->decrement('stok', $jumlah);
+        }
+    });
+
+    return redirect()->route('transaksi.show', $transaksi)
+                     ->with('success', 'Transaksi berhasil diupdate!');
+}
+
     public function struk(Transaksi $transaksi)
     {
         $transaksi->load(['pelanggan', 'details.produk']);

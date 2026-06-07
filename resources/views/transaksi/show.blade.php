@@ -4,6 +4,10 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Transaksi</h1>
     <div>
+        <a href="{{ route('transaksi.edit', $transaksi) }}"
+   class="btn btn-warning btn-sm shadow-sm mr-2">
+    <i class="fas fa-edit"></i> Edit Transaksi
+</a>
         <a href="{{ route('transaksi.struk', $transaksi) }}"
            class="btn btn-success btn-sm shadow-sm mr-2" target="_blank">
             <i class="fas fa-print"></i> Cetak Struk
