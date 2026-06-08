@@ -24,6 +24,10 @@ protected $fillable = [
     'catatan',
 ];
 
+public function pesanan()
+{
+    return $this->hasOne(Pesanan::class);
+}
 // Tambahkan relasi user
 public function user()
 {

@@ -12,6 +12,7 @@ use App\Http\Controllers\RestokController;
 use App\Http\Controllers\GaransiController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\HutangController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('pesanan', PesananController::class)->only(['index', 'create', 'store', 'show']);
+Route::post('/pesanan/{pesanan}/update-status', [PesananController::class, 'updateStatus'])->name('pesanan.update-status');
     Route::resource('hutang', HutangController::class)->only(['index', 'show']);
 Route::post('/hutang/{hutang}/bayar', [HutangController::class, 'bayar'])->name('hutang.bayar');
     Route::resource('supplier', SupplierController::class);

@@ -237,6 +237,17 @@
             </a>
         </li>
 
+        <li class="nav-item {{ Request::is('pesanan*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('pesanan.index') }}">
+        <i class="fas fa-fw fa-box"></i>
+        <span>Status Pesanan</span>
+        @php $pesananCount = \App\Models\Pesanan::whereIn('status', ['menunggu','diproses','siap_diambil'])->count(); @endphp
+        @if($pesananCount > 0)
+            <span class="badge badge-warning ml-1">{{ $pesananCount }}</span>
+        @endif
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('hutang*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('hutang.index') }}">
         <i class="fas fa-fw fa-file-invoice-dollar"></i>
