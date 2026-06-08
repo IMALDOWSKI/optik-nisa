@@ -64,6 +64,7 @@ class TransaksiController extends Controller
             $transaksi = Transaksi::create([
                 'kode_transaksi'    => Transaksi::generateKode(),
                 'pelanggan_id'      => $request->pelanggan_id,
+                'user_id'           => auth()->id(), // ← disini
                 'total_harga'       => $total,
                 'diskon'            => $diskon,
                 'grand_total'       => $grandTotal,
@@ -153,6 +154,7 @@ class TransaksiController extends Controller
 
             $transaksi->update([
                 'pelanggan_id'      => $request->pelanggan_id,
+                'user_id'           => auth()->id(), // ← disini
                 'total_harga'       => $total,
                 'diskon'            => $diskon,
                 'grand_total'       => $grandTotal,

@@ -44,12 +44,15 @@ Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->na
 
     Route::resource('resep', ResepMataController::class);
 
-    Route::middleware(['role:admin'])->group(function () {
-        Route::resource('user', UserController::class);
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
-        Route::get('/laporan/export-csv', [LaporanController::class, 'exportCsv'])->name('laporan.csv');
-    });
+Route::middleware(['role:admin'])->group(function () {
+    Route::resource('user', UserController::class);
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/kategori', [LaporanController::class, 'kategori'])->name('laporan.kategori');
+    Route::get('/laporan/kasir', [LaporanController::class, 'kasir'])->name('laporan.kasir');
+    Route::get('/laporan/keuangan', [LaporanController::class, 'keuangan'])->name('laporan.keuangan');
+    Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
+    Route::get('/laporan/export-csv', [LaporanController::class, 'exportCsv'])->name('laporan.csv');
+});
 
 });
 

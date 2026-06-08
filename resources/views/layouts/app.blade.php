@@ -262,27 +262,48 @@
     </a>
 </li>
 
-        @if(auth()->user()->role == 'admin')
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">Laporan</div>
+@if(auth()->user()->role == 'admin')
+<hr class="sidebar-divider">
+<div class="sidebar-heading">Laporan</div>
 
-        <li class="nav-item {{ Request::is('laporan*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('laporan.index') }}">
-                <i class="fas fa-fw fa-chart-bar"></i>
-                <span>Laporan Transaksi</span>
-            </a>
-        </li>
+<li class="nav-item {{ Request::is('laporan') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laporan.index') }}">
+        <i class="fas fa-fw fa-list-alt"></i>
+        <span>Laporan Transaksi</span>
+    </a>
+</li>
 
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">Pengaturan</div>
+<li class="nav-item {{ Request::is('laporan/kategori*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laporan.kategori') }}">
+        <i class="fas fa-fw fa-tags"></i>
+        <span>Laporan Kategori</span>
+    </a>
+</li>
 
-        <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('user.index') }}">
-                <i class="fas fa-fw fa-user-cog"></i>
-                <span>Manajemen User</span>
-            </a>
-        </li>
-        @endif
+<li class="nav-item {{ Request::is('laporan/kasir*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laporan.kasir') }}">
+        <i class="fas fa-fw fa-user-tie"></i>
+        <span>Laporan Kasir</span>
+    </a>
+</li>
+
+<li class="nav-item {{ Request::is('laporan/keuangan*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laporan.keuangan') }}">
+        <i class="fas fa-fw fa-money-bill-wave"></i>
+        <span>Laporan Keuangan</span>
+    </a>
+</li>
+
+<hr class="sidebar-divider">
+<div class="sidebar-heading">Pengaturan</div>
+
+<li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('user.index') }}">
+        <i class="fas fa-fw fa-user-cog"></i>
+        <span>Manajemen User</span>
+    </a>
+</li>
+@endif
 
         <hr class="sidebar-divider d-none d-md-block">
         <div class="text-center d-none d-md-inline">

@@ -12,6 +12,7 @@ class Transaksi extends Model
 protected $fillable = [
     'kode_transaksi',
     'pelanggan_id',
+    'user_id',
     'total_harga',
     'diskon',
     'grand_total',
@@ -22,6 +23,12 @@ protected $fillable = [
     'status',
     'catatan',
 ];
+
+// Tambahkan relasi user
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
 
     public function pelanggan()
     {
