@@ -237,6 +237,17 @@
             </a>
         </li>
 
+        <li class="nav-item {{ Request::is('hutang*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('hutang.index') }}">
+        <i class="fas fa-fw fa-file-invoice-dollar"></i>
+        <span>Hutang Pelanggan</span>
+        @php $hutangCount = \App\Models\Hutang::where('status', 'belum_lunas')->count(); @endphp
+        @if($hutangCount > 0)
+            <span class="badge badge-danger ml-1">{{ $hutangCount }}</span>
+        @endif
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('garansi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('garansi.index') }}">
         <i class="fas fa-fw fa-shield-alt"></i>

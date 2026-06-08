@@ -11,6 +11,7 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\RestokController;
 use App\Http\Controllers\GaransiController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\HutangController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('hutang', HutangController::class)->only(['index', 'show']);
+Route::post('/hutang/{hutang}/bayar', [HutangController::class, 'bayar'])->name('hutang.bayar');
     Route::resource('supplier', SupplierController::class);
     Route::resource('garansi', GaransiController::class)->only(['index', 'create', 'store', 'show']);
 Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->name('garansi.klaim');

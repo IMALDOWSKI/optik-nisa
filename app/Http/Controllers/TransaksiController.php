@@ -22,80 +22,125 @@ class TransaksiController extends Controller
         $pelanggans = Pelanggan::orderBy('nama')->get();
         $produks    = Produk::where('status', 'aktif')->where('stok', '>', 0)->get();
         return view('transaksi.create', compact('pelanggans', 'produks'));
+        // Jika DP / belum lunas
+if ($request->tipe_bayar == 'dp') {
+    $dp          = $request->dp ?? 0;
+    $sisaHutang  = $grandTotal - $dp;
+
+    Hutang::create([
+        'pelanggan_id'  => $request->pelanggan_id,
+        'transaksi_id'  => $transaksi->id,
+        'user_id'       => auth()->id(),
+        'total_tagihan' => $grandTotal,
+        'total_bayar'   => $dp,
+        'sisa_hutang'   => $sisaHutang,
+        'status'        => $sisaHutang <= 0 ? 'lunas' : 'belum_lunas',
+        'jatuh_tempo'   => $request->jatuh_tempo,
+        'catatan'       => $request->catatan,
+    ]);
+}
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'pelanggan_id'      => 'required|exists:pelanggans,id',
-            'tanggal_transaksi' => 'required|date',
-            'metode_bayar'      => 'required',
-            'produk_id'         => 'required|array|min:1',
-            'produk_id.*'       => 'required|exists:produks,id',
-            'jumlah'            => 'required|array|min:1',
-            'jumlah.*'          => 'required|integer|min:1',
+public function store(Request $request)
+{
+    $request->validate([
+        'pelanggan_id'      => 'required|exists:pelanggans,id',
+        'tanggal_transaksi' => 'required|date',
+        'metode_bayar'      => 'required',
+        'tipe_bayar'        => 'required',
+        'produk_id'         => 'required|array|min:1',
+        'produk_id.*'       => 'required|exists:produks,id',
+        'jumlah'            => 'required|array|min:1',
+        'jumlah.*'          => 'required|integer|min:1',
+    ]);
+
+    DB::transaction(function () use ($request) {
+        $total = 0;
+
+        foreach ($request->produk_id as $i => $produkId) {
+            $produk  = Produk::find($produkId);
+            $jumlah  = $request->jumlah[$i];
+            $total  += $produk->harga * $jumlah;
+        }
+
+        // Hitung diskon
+        $diskon     = 0;
+        $tipeDiskon = $request->tipe_diskon ?? 'nominal';
+
+        if ($request->diskon && $request->diskon > 0) {
+            if ($tipeDiskon == 'persen') {
+                $diskon = $total * ($request->diskon / 100);
+            } else {
+                $diskon = $request->diskon;
+            }
+        }
+
+        $grandTotal = $total - $diskon;
+
+        // Hitung bayar berdasarkan tipe bayar
+        if ($request->tipe_bayar == 'dp') {
+            $bayar     = $request->dp ?? 0;
+            $kembalian = 0;
+            $status    = 'pending';
+        } else {
+            $bayar     = $request->bayar ?? $grandTotal;
+            $kembalian = $bayar - $grandTotal;
+            $status    = 'selesai';
+        }
+
+        $transaksi = Transaksi::create([
+            'kode_transaksi'    => Transaksi::generateKode(),
+            'pelanggan_id'      => $request->pelanggan_id,
+            'user_id'           => auth()->id(),
+            'total_harga'       => $total,
+            'diskon'            => $diskon,
+            'grand_total'       => $grandTotal,
+            'metode_bayar'      => $request->metode_bayar,
+            'bayar'             => $bayar,
+            'kembalian'         => $kembalian,
+            'tanggal_transaksi' => $request->tanggal_transaksi,
+            'status'            => $status,
+            'catatan'           => $request->catatan,
         ]);
 
-        DB::transaction(function () use ($request) {
-            $total = 0;
+        foreach ($request->produk_id as $i => $produkId) {
+            $produk   = Produk::find($produkId);
+            $jumlah   = $request->jumlah[$i];
+            $subtotal = $produk->harga * $jumlah;
 
-            foreach ($request->produk_id as $i => $produkId) {
-                $produk  = Produk::find($produkId);
-                $jumlah  = $request->jumlah[$i];
-                $total  += $produk->harga * $jumlah;
-            }
-
-            // Hitung diskon
-            $diskon     = 0;
-            $tipeDiskon = $request->tipe_diskon ?? 'nominal';
-
-            if ($request->diskon && $request->diskon > 0) {
-                if ($tipeDiskon == 'persen') {
-                    $diskon = $total * ($request->diskon / 100);
-                } else {
-                    $diskon = $request->diskon;
-                }
-            }
-
-            $grandTotal = $total - $diskon;
-            $bayar      = $request->bayar ?? $grandTotal;
-            $kembalian  = $bayar - $grandTotal;
-
-            $transaksi = Transaksi::create([
-                'kode_transaksi'    => Transaksi::generateKode(),
-                'pelanggan_id'      => $request->pelanggan_id,
-                'user_id'           => auth()->id(), // ← disini
-                'total_harga'       => $total,
-                'diskon'            => $diskon,
-                'grand_total'       => $grandTotal,
-                'metode_bayar'      => $request->metode_bayar,
-                'bayar'             => $bayar,
-                'kembalian'         => $kembalian,
-                'tanggal_transaksi' => $request->tanggal_transaksi,
-                'status'            => 'selesai',
-                'catatan'           => $request->catatan,
+            DetailTransaksi::create([
+                'transaksi_id' => $transaksi->id,
+                'produk_id'    => $produkId,
+                'jumlah'       => $jumlah,
+                'harga_satuan' => $produk->harga,
+                'subtotal'     => $subtotal,
             ]);
 
-            foreach ($request->produk_id as $i => $produkId) {
-                $produk   = Produk::find($produkId);
-                $jumlah   = $request->jumlah[$i];
-                $subtotal = $produk->harga * $jumlah;
+            $produk->decrement('stok', $jumlah);
+        }
 
-                DetailTransaksi::create([
-                    'transaksi_id' => $transaksi->id,
-                    'produk_id'    => $produkId,
-                    'jumlah'       => $jumlah,
-                    'harga_satuan' => $produk->harga,
-                    'subtotal'     => $subtotal,
-                ]);
+        // Buat hutang jika DP
+        if ($request->tipe_bayar == 'dp') {
+            $dp         = $request->dp ?? 0;
+            $sisaHutang = $grandTotal - $dp;
 
-                $produk->decrement('stok', $jumlah);
-            }
-        });
+            \App\Models\Hutang::create([
+                'pelanggan_id'  => $request->pelanggan_id,
+                'transaksi_id'  => $transaksi->id,
+                'user_id'       => auth()->id(),
+                'total_tagihan' => $grandTotal,
+                'total_bayar'   => $dp,
+                'sisa_hutang'   => $sisaHutang,
+                'status'        => $sisaHutang <= 0 ? 'lunas' : 'belum_lunas',
+                'jatuh_tempo'   => $request->jatuh_tempo,
+                'catatan'       => 'DP Transaksi ' . $transaksi->kode_transaksi,
+            ]);
+        }
+    });
 
-        return redirect()->route('transaksi.index')
-                         ->with('success', 'Transaksi berhasil disimpan!');
-    }
+    return redirect()->route('transaksi.index')
+                     ->with('success', 'Transaksi berhasil disimpan!');
+}
 
     public function show(Transaksi $transaksi)
     {
@@ -109,6 +154,7 @@ class TransaksiController extends Controller
         $pelanggans = Pelanggan::orderBy('nama')->get();
         $produks    = Produk::where('status', 'aktif')->get();
         return view('transaksi.edit', compact('transaksi', 'pelanggans', 'produks'));
+        
     }
 
     public function update(Request $request, Transaksi $transaksi)
@@ -207,4 +253,6 @@ class TransaksiController extends Controller
         return redirect()->route('transaksi.index')
                          ->with('success', 'Transaksi berhasil dihapus!');
     }
+
+    
 }

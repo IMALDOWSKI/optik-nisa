@@ -41,6 +41,42 @@
                 <small class="text-muted d-block">Metode Pembayaran</small>
                 <strong>{{ ucfirst($transaksi->metode_bayar) }}</strong>
             </div>
+            {{-- Tipe Bayar --}}
+<div class="form-group">
+    <label class="font-weight-bold">Tipe Pembayaran</label>
+    <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+        <label class="btn btn-outline-success active" id="btnLunas">
+            <input type="radio" name="tipe_bayar" value="lunas" checked>
+            <i class="fas fa-check-circle mr-1"></i> Lunas
+        </label>
+        <label class="btn btn-outline-warning" id="btnDp">
+            <input type="radio" name="tipe_bayar" value="dp">
+            <i class="fas fa-hand-holding-usd mr-1"></i> DP / Cicil
+        </label>
+    </div>
+</div>
+
+{{-- Info DP (muncul kalau pilih DP) --}}
+<div id="infoDp" style="display:none">
+    <div class="form-group">
+        <label class="font-weight-bold">Jumlah DP</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Rp</span>
+            </div>
+            <input type="number" name="dp" id="inputDp"
+                   class="form-control" placeholder="0" min="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Jatuh Tempo Pelunasan</label>
+        <input type="date" name="jatuh_tempo" class="form-control">
+    </div>
+    <div id="infoSisaHutang" class="alert alert-warning d-none">
+        <i class="fas fa-info-circle mr-2"></i>
+        Sisa hutang: <strong id="nilaiSisaHutang">Rp 0</strong>
+    </div>
+</div>
         </div>
 
         <div class="table-responsive">
