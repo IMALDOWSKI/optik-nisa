@@ -45,6 +45,38 @@ class Notifikasi extends Model
         }
     }
 
+    // Reminder kontrol mata (sudah lebih dari 1 tahun)
+public static function cekReminderKontrolMata()
+{
+    $satu_tahun_lalu = now()->subYear();
+
+    // Cari pelanggan yang resep matanya sudah lebih dari 1 tahun
+    $pelangganPerluKontrol = \App\Models\Pelanggan::whereHas('resepMatas', function($q) use ($satu_tahun_lalu) {
+        $q->where('tanggal_periksa', '<', $satu_tahun_lalu);
+    })->whereDoesntHave('resepMatas', function($q) use ($satu_tahun_lalu) {
+        $q->where('tanggal_periksa', '>=', $satu_tahun_lalu);
+    })->get();
+
+    foreach ($pelangganPerluKontrol as $pelanggan) {
+        $sudahAda = self::where('tipe', 'pelanggan')
+                        ->where('judul', 'like', '%Kontrol Mata%' . $pelanggan->nama . '%')
+                        ->whereDate('created_at', today())
+                        ->exists();
+
+        if (!$sudahAda) {
+            $resepTerakhir = $pelanggan->resepMatas()->latest('tanggal_periksa')->first();
+            $selisih       = \Carbon\Carbon::parse($resepTerakhir->tanggal_periksa)->diffForHumans();
+
+            self::create([
+                'judul' => 'Reminder Kontrol Mata: ' . $pelanggan->nama,
+                'pesan' => $pelanggan->nama . ' terakhir kontrol mata ' . $selisih . '. Sudah waktunya kontrol mata kembali!',
+                'tipe'  => 'pelanggan',
+                'url'   => '/pelanggan/' . $pelanggan->id . '/riwayat',
+            ]);
+        }
+    }
+}
+
     // Generate notifikasi pelanggan tidak aktif
     public static function cekPelangganTidakAktif()
     {

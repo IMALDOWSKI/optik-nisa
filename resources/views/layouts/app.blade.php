@@ -291,6 +291,13 @@
     </a>
 </li>
 
+<li class="nav-item {{ Request::is('reminder*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('reminder.index') }}">
+        <i class="fas fa-fw fa-eye"></i>
+        <span>Reminder Kontrol Mata</span>
+    </a>
+</li>
+
 @if(auth()->user()->role == 'admin')
 <hr class="sidebar-divider">
 <div class="sidebar-heading">Laporan</div>

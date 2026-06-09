@@ -15,6 +15,7 @@ use App\Http\Controllers\HutangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\LabaRugiController;
+use App\Http\Controllers\ReminderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/reminder', [ReminderController::class, 'index'])->name('reminder.index');
     Route::resource('pengeluaran', PengeluaranController::class)
      ->only(['index', 'create', 'store', 'destroy']);
 Route::get('/laba-rugi', [LabaRugiController::class, 'index'])->name('laba-rugi.index');
