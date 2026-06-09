@@ -16,6 +16,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('member', MemberController::class)->only(['index', 'create', 'store', 'show']);
+Route::post('/member/{member}/tukar-poin', [MemberController::class, 'tukarPoin'])->name('member.tukar-poin');
     Route::get('/reminder', [ReminderController::class, 'index'])->name('reminder.index');
     Route::resource('pengeluaran', PengeluaranController::class)
      ->only(['index', 'create', 'store', 'destroy']);

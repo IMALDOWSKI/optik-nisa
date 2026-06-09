@@ -7,6 +7,8 @@ use App\Models\DetailTransaksi;
 use App\Models\Pelanggan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use App\Models\Member;
+use App\Models\PoinRiwayat;
 use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
@@ -102,6 +104,24 @@ public function store(Request $request)
             'status'            => $status,
             'catatan'           => $request->catatan,
         ]);
+
+        // Tambah poin member otomatis
+$pelanggan = Pelanggan::find($request->pelanggan_id);
+if ($pelanggan->member && $pelanggan->member->status == 'aktif') {
+    $poinDidapat = Member::hitungPoin($grandTotal);
+    if ($poinDidapat > 0) {
+        $pelanggan->member->increment('total_poin', $poinDidapat);
+        $pelanggan->member->updateLevel();
+
+        PoinRiwayat::create([
+            'member_id'    => $pelanggan->member->id,
+            'transaksi_id' => $transaksi->id,
+            'tipe'         => 'masuk',
+            'poin'         => $poinDidapat,
+            'keterangan'   => 'Poin dari transaksi ' . $transaksi->kode_transaksi,
+        ]);
+    }
+}
 
         foreach ($request->produk_id as $i => $produkId) {
             $produk   = Produk::find($produkId);

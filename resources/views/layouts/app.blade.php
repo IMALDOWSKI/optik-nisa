@@ -217,6 +217,13 @@
             </a>
         </li>
 
+        <li class="nav-item {{ Request::is('member*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('member.index') }}">
+        <i class="fas fa-fw fa-id-card"></i>
+        <span>Kartu Member</span>
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('produk*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('produk.index') }}">
                 <i class="fas fa-fw fa-glasses"></i>

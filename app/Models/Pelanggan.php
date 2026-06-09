@@ -23,6 +23,12 @@ class Pelanggan extends Model
         return $this->hasMany(Transaksi::class);
     }
 
+    
+public function member()
+{
+    return $this->hasOne(Member::class);
+}
+
     // Tambahkan relasi ini
 public function resepMatas()
 {
