@@ -73,7 +73,9 @@
                             </a>
                         </td>
                         <td>Rp {{ number_format($h->total_tagihan, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($h->total_bayar, 0, ',', '.') }}</td>
+                        <td class="text-success">
+                            Rp {{ number_format($h->total_bayar, 0, ',', '.') }}
+                        </td>
                         <td>
                             <strong class="text-{{ $h->status == 'lunas' ? 'success' : 'danger' }}">
                                 Rp {{ number_format($h->sisa_hutang, 0, ',', '.') }}
@@ -90,12 +92,12 @@
                                     @if($isLewat) ⚠️ @endif
                                 </span>
                             @else
-                                -
+                                <span class="text-muted">-</span>
                             @endif
                         </td>
                         <td>
                             <span class="badge badge-{{ $h->status == 'lunas' ? 'success' : 'danger' }}">
-                                {{ $h->status == 'lunas' ? 'Lunas' : 'Belum Lunas' }}
+                                {{ $h->status == 'lunas' ? '✅ Lunas' : '⚠️ Belum Lunas' }}
                             </span>
                         </td>
                         <td>
