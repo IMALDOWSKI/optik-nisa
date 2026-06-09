@@ -13,6 +13,8 @@ use App\Http\Controllers\GaransiController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\LabaRugiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +22,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('pengeluaran', PengeluaranController::class)
+     ->only(['index', 'create', 'store', 'destroy']);
+Route::get('/laba-rugi', [LabaRugiController::class, 'index'])->name('laba-rugi.index');
     Route::resource('pesanan', PesananController::class)->only(['index', 'create', 'store', 'show']);
 Route::post('/pesanan/{pesanan}/update-status', [PesananController::class, 'updateStatus'])->name('pesanan.update-status');
     Route::resource('hutang', HutangController::class)->only(['index', 'show']);

@@ -203,6 +203,13 @@
         <hr class="sidebar-divider">
         <div class="sidebar-heading">Data Master</div>
 
+        <li class="nav-item {{ Request::is('pengeluaran*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('pengeluaran.index') }}">
+        <i class="fas fa-fw fa-money-bill-wave"></i>
+        <span>Pengeluaran</span>
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('pelanggan*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('pelanggan.index') }}">
                 <i class="fas fa-fw fa-users"></i>
@@ -287,6 +294,13 @@
 @if(auth()->user()->role == 'admin')
 <hr class="sidebar-divider">
 <div class="sidebar-heading">Laporan</div>
+
+<li class="nav-item {{ Request::is('laba-rugi*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('laba-rugi.index') }}">
+        <i class="fas fa-fw fa-chart-line"></i>
+        <span>Laba Rugi</span>
+    </a>
+</li>
 
 <li class="nav-item {{ Request::is('laporan') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laporan.index') }}">
