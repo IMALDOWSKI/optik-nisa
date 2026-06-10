@@ -21,12 +21,14 @@ public function index()
 }
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_produk' => 'required',
-            'kategori'    => 'required',
-            'harga'       => 'required|numeric',
-            'stok'        => 'required|integer',
-        ]);
+// Di method store
+$request->validate([
+    'nama_produk' => 'required',
+    'kategori'    => 'required',
+    'harga'       => 'required|numeric',
+    'stok'        => 'required|integer',
+    'barcode'     => 'nullable|unique:produks,barcode',
+]);
 
         $data = $request->all();
         $data['kode_produk'] = Produk::generateKode($request->kategori);
@@ -47,13 +49,13 @@ public function index()
 
     public function update(Request $request, Produk $produk)
     {
-        $request->validate([
-            'nama_produk' => 'required',
-            'kategori'    => 'required',
-            'harga'       => 'required|numeric',
-            'stok'        => 'required|integer',
-        ]);
-
+$request->validate([
+    'nama_produk' => 'required',
+    'kategori'    => 'required',
+    'harga'       => 'required|numeric',
+    'stok'        => 'required|integer',
+    'barcode'     => 'nullable|unique:produks,barcode,' . $produk->id,
+]);
         $produk->update($request->all());
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate!');
     }

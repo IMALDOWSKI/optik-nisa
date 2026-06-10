@@ -22,6 +22,51 @@
             </div>
             <div class="card-body">
 
+            {{-- Tombol Scan Barcode --}}
+<div class="mb-3">
+    <button type="button" class="btn btn-info btn-sm" id="btnScanBarcode">
+        <i class="fas fa-barcode mr-1"></i> Scan Barcode
+    </button>
+    <div class="input-group mt-2" id="inputBarcodeManual" style="display:none">
+        <input type="text" id="barcodeInput" class="form-control"
+               placeholder="Scan atau ketik barcode / kode produk...">
+        <div class="input-group-append">
+            <button type="button" class="btn btn-primary" id="btnCariBarcode">
+                <i class="fas fa-search"></i> Cari
+            </button>
+        </div>
+    </div>
+    <div id="scanResult" class="mt-2"></div>
+</div>
+
+{{-- Modal Kamera Scanner --}}
+<div class="modal fade" id="modalScanner" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-camera mr-2"></i>Scan Barcode
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="interactive" class="viewport" style="position:relative; width:100%;">
+                    <video style="width:100%;" autoplay></video>
+                    <canvas class="drawingBuffer" style="position:absolute; top:0; left:0; width:100%;"></canvas>
+                </div>
+                <p class="text-muted text-center mt-2 small">
+                    Arahkan kamera ke barcode produk
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Tutup Kamera
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
                 <div id="produkContainer">
                     <div class="produk-row row mb-3 align-items-end border-bottom pb-3">
                         <div class="col-md-6">
@@ -282,6 +327,128 @@
 
 @push('scripts')
 <script>
+
+
+// ================================================
+// BARCODE SCANNER
+// ================================================
+
+// Toggle input manual barcode
+document.getElementById('btnScanBarcode').addEventListener('click', function() {
+    const inputManual = document.getElementById('inputBarcodeManual');
+    if (inputManual.style.display === 'none') {
+        inputManual.style.display = 'flex';
+        document.getElementById('barcodeInput').focus();
+    } else {
+        inputManual.style.display = 'none';
+    }
+});
+
+// Cari produk berdasarkan barcode
+function cariProdukBarcode(barcode) {
+    if (!barcode) return;
+
+    const scanResult = document.getElementById('scanResult');
+    scanResult.innerHTML = '<span class="text-info"><i class="fas fa-spinner fa-spin mr-1"></i>Mencari produk...</span>';
+
+    fetch('/api/produk/barcode/' + encodeURIComponent(barcode))
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                scanResult.innerHTML = '<span class="text-danger"><i class="fas fa-times-circle mr-1"></i>' + data.error + '</span>';
+                return;
+            }
+
+            // Tambah baris produk baru
+            tambahProdukDariBarcode(data);
+            scanResult.innerHTML = '<span class="text-success"><i class="fas fa-check-circle mr-1"></i>' + data.nama_produk + ' berhasil ditambahkan!</span>';
+            document.getElementById('barcodeInput').value = '';
+
+            setTimeout(() => { scanResult.innerHTML = ''; }, 3000);
+        })
+        .catch(() => {
+            scanResult.innerHTML = '<span class="text-danger"><i class="fas fa-times-circle mr-1"></i>Produk tidak ditemukan!</span>';
+        });
+}
+
+// Tambah produk dari hasil scan ke form
+function tambahProdukDariBarcode(produk) {
+    const container = document.getElementById('produkContainer');
+
+    // Cek apakah produk sudah ada di form
+    let sudahAda = false;
+    container.querySelectorAll('.produk-select').forEach(function(select) {
+        if (select.value == produk.id) {
+            // Tambah jumlahnya saja
+            const jumlahInput = select.closest('.produk-row').querySelector('.jumlah-input');
+            jumlahInput.value = parseInt(jumlahInput.value) + 1;
+            sudahAda = true;
+            hitungTotal();
+        }
+    });
+
+    if (!sudahAda) {
+        // Buat baris baru
+        const firstRow = container.querySelector('.produk-row');
+        const newRow   = firstRow.cloneNode(true);
+        const select   = newRow.querySelector('.produk-select');
+
+        // Cek apakah opsi produk ada di select
+        let opsiAda = false;
+        for (let opt of select.options) {
+            if (opt.value == produk.id) {
+                select.value = produk.id;
+                opsiAda = true;
+                break;
+            }
+        }
+
+        if (!opsiAda) {
+            // Tambah opsi baru
+            const option = new Option(
+                '[' + produk.kategori + '] ' + produk.nama_produk +
+                ' (Stok: ' + produk.stok + ') - Rp ' + produk.harga.toLocaleString('id-ID'),
+                produk.id,
+                true,
+                true
+            );
+            option.dataset.harga = produk.harga;
+            option.dataset.stok  = produk.stok;
+            select.appendChild(option);
+            select.value = produk.id;
+        }
+
+        newRow.querySelector('.jumlah-input').value   = '1';
+        newRow.querySelector('.subtotal-input').value = '';
+
+        // Jika baris pertama kosong, gunakan baris pertama
+        const firstSelect = container.querySelector('.produk-select');
+        if (!firstSelect.value) {
+            firstSelect.value = produk.id;
+            container.querySelector('.jumlah-input').value = '1';
+        } else {
+            container.appendChild(newRow);
+            bindRowEvents(newRow);
+        }
+
+        hitungTotal();
+    }
+}
+
+// Tombol cari barcode manual
+document.getElementById('btnCariBarcode').addEventListener('click', function() {
+    const barcode = document.getElementById('barcodeInput').value.trim();
+    cariProdukBarcode(barcode);
+});
+
+// Enter key di input barcode
+document.getElementById('barcodeInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const barcode = this.value.trim();
+        cariProdukBarcode(barcode);
+    }
+});
 // ================================================
 // HITUNG TOTAL
 // ================================================

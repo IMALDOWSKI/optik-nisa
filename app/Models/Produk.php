@@ -9,26 +9,24 @@ class Produk extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'kode_produk',
-        'nama_produk',
-        'kategori',
-        'deskripsi',
-        'harga',
-        'stok',
-        'status',
-        'merk',
-        // Frame
-        'material',
-        'ukuran',
-        'warna',
-        'gender',
-        // Lensa
-        'jenis_lensa',
-        'indeks_lensa',
-        'coating',
-    ];
-
+protected $fillable = [
+    'kode_produk',
+    'barcode',
+    'nama_produk',
+    'kategori',
+    'deskripsi',
+    'harga',
+    'stok',
+    'status',
+    'merk',
+    'material',
+    'ukuran',
+    'warna',
+    'gender',
+    'jenis_lensa',
+    'indeks_lensa',
+    'coating',
+];
     public function transaksis()
     {
         return $this->hasMany(Transaksi::class);

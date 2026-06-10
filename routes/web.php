@@ -60,6 +60,27 @@ Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->na
 
     Route::resource('resep', ResepMataController::class);
 
+    Route::get('/api/produk/barcode/{barcode}', function($barcode) {
+    $produk = \App\Models\Produk::where('barcode', $barcode)
+                ->orWhere('kode_produk', $barcode)
+                ->where('status', 'aktif')
+                ->where('stok', '>', 0)
+                ->first();
+
+    if (!$produk) {
+        return response()->json(['error' => 'Produk tidak ditemukan'], 404);
+    }
+
+    return response()->json([
+        'id'          => $produk->id,
+        'nama_produk' => $produk->nama_produk,
+        'harga'       => $produk->harga,
+        'stok'        => $produk->stok,
+        'kategori'    => $produk->kategori,
+        'kode_produk' => $produk->kode_produk,
+    ]);
+})->name('api.produk.barcode');
+
 Route::middleware(['role:admin'])->group(function () {
     Route::resource('user', UserController::class);
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');

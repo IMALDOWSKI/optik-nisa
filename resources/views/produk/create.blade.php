@@ -23,6 +23,19 @@
                         @error('nama_produk') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
+                <div class="col-md-4">
+    <div class="form-group">
+        <label class="font-weight-bold">Barcode</label>
+        <input type="text" name="barcode"
+               class="form-control @error('barcode') is-invalid @enderror"
+               value="{{ old('barcode') }}"
+               placeholder="Scan atau ketik barcode">
+        @error('barcode')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+        <small class="text-muted">Opsional — bisa diisi nanti</small>
+    </div>
+</div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Kategori <span class="text-danger">*</span></label>

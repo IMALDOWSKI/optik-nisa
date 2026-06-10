@@ -34,6 +34,20 @@
                             {{ ucfirst($produk->status) }}
                         </span>
                     </td></tr>
+                    <tr>
+    <th>Barcode</th>
+    <td>
+        @if($produk->barcode)
+            <code>{{ $produk->barcode }}</code>
+            <div id="barcodeDisplay" class="mt-2"></div>
+        @else
+            <span class="text-muted">Belum ada barcode</span>
+            <a href="{{ route('produk.edit', $produk) }}" class="btn btn-xs btn-warning ml-2">
+                <i class="fas fa-plus"></i> Tambah
+            </a>
+        @endif
+    </td>
+</tr>
                 </table>
             </div>
             <div class="col-md-6">

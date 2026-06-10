@@ -23,6 +23,18 @@
                                value="{{ $produk->kode_produk }}" readonly>
                     </div>
                 </div>
+                <div class="col-md-4">
+    <div class="form-group">
+        <label class="font-weight-bold">Barcode</label>
+        <input type="text" name="barcode"
+               class="form-control @error('barcode') is-invalid @enderror"
+               value="{{ old('barcode', $produk->barcode) }}"
+               placeholder="Scan atau ketik barcode">
+        @error('barcode')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
                 <div class="col-md-5">
                     <div class="form-group">
                         <label class="font-weight-bold">
