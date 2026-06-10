@@ -316,6 +316,13 @@
 <hr class="sidebar-divider">
 <div class="sidebar-heading">Laporan</div>
 
+<li class="nav-item {{ Request::is('backup*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('backup.index') }}">
+        <i class="fas fa-fw fa-database"></i>
+        <span>Backup Database</span>
+    </a>
+</li>
+
 <li class="nav-item {{ Request::is('laba-rugi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laba-rugi.index') }}">
         <i class="fas fa-fw fa-chart-line"></i>

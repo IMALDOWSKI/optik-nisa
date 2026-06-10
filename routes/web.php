@@ -18,6 +18,7 @@ use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\BackupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +26,10 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+Route::post('/backup/buat', [BackupController::class, 'buat'])->name('backup.buat');
+Route::get('/backup/download', [BackupController::class, 'download'])->name('backup.download');
+Route::delete('/backup/hapus', [BackupController::class, 'hapus'])->name('backup.hapus');
     Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
 Route::get('/activity-log/{activityLog}', [ActivityLogController::class, 'show'])->name('activity-log.show');
 Route::delete('/activity-log/hapus-lama', [ActivityLogController::class, 'hapusLama'])->name('activity-log.hapus-lama');
