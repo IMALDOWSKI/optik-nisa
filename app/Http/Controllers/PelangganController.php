@@ -71,6 +71,8 @@ class PelangganController extends Controller
 
         Pelanggan::create($request->all());
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil ditambahkan!');
+        // Di store
+ActivityLog::catat('Pelanggan', 'create', 'Menambah pelanggan baru: ' . $pelanggan->nama, $pelanggan);
     }
 
     public function edit(Pelanggan $pelanggan)
@@ -88,11 +90,15 @@ class PelangganController extends Controller
 
         $pelanggan->update($request->all());
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil diupdate!');
+        // Di update  
+ActivityLog::catat('Pelanggan', 'update', 'Mengupdate pelanggan: ' . $pelanggan->nama, $pelanggan);
     }
 
     public function destroy(Pelanggan $pelanggan)
     {
         $pelanggan->delete();
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil dihapus!');
+        // Di destroy
+ActivityLog::catat('Pelanggan', 'delete', 'Menghapus pelanggan: ' . $pelanggan->nama);
     }
 }

@@ -298,6 +298,13 @@
     </a>
 </li>
 
+<li class="nav-item {{ Request::is('activity-log*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('activity-log.index') }}">
+        <i class="fas fa-fw fa-history"></i>
+        <span>Activity Log</span>
+    </a>
+</li>
+
 <li class="nav-item {{ Request::is('reminder*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('reminder.index') }}">
         <i class="fas fa-fw fa-eye"></i>

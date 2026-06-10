@@ -17,6 +17,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+Route::get('/activity-log/{activityLog}', [ActivityLogController::class, 'show'])->name('activity-log.show');
+Route::delete('/activity-log/hapus-lama', [ActivityLogController::class, 'hapusLama'])->name('activity-log.hapus-lama');
     Route::resource('member', MemberController::class)->only(['index', 'create', 'store', 'show']);
 Route::post('/member/{member}/tukar-poin', [MemberController::class, 'tukarPoin'])->name('member.tukar-poin');
     Route::get('/reminder', [ReminderController::class, 'index'])->name('reminder.index');

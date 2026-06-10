@@ -45,6 +45,7 @@ if ($request->tipe_bayar == 'dp') {
 
 public function store(Request $request)
 {
+    
     $request->validate([
         'pelanggan_id'      => 'required|exists:pelanggans,id',
         'tanggal_transaksi' => 'required|date',
@@ -55,6 +56,7 @@ public function store(Request $request)
         'jumlah'            => 'required|array|min:1',
         'jumlah.*'          => 'required|integer|min:1',
     ]);
+    
 
     DB::transaction(function () use ($request) {
         $total = 0;
@@ -64,6 +66,8 @@ public function store(Request $request)
             $jumlah  = $request->jumlah[$i];
             $total  += $produk->harga * $jumlah;
         }
+        
+        
 
         // Hitung diskon
         $diskon     = 0;
@@ -104,6 +108,13 @@ public function store(Request $request)
             'status'            => $status,
             'catatan'           => $request->catatan,
         ]);
+                // Di store (setelah transaksi dibuat)
+\App\Models\ActivityLog::catat(
+    'Transaksi', 'create',
+    'Membuat transaksi baru: ' . $transaksi->kode_transaksi,
+    $transaksi
+);
+
 
         // Tambah poin member otomatis
 $pelanggan = Pelanggan::find($request->pelanggan_id);
@@ -263,6 +274,11 @@ if ($pelanggan->member && $pelanggan->member->status == 'aktif') {
 
     public function destroy(Transaksi $transaksi)
     {
+        // Di destroy
+\App\Models\ActivityLog::catat(
+    'Transaksi', 'delete',
+    'Menghapus transaksi: ' . $transaksi->kode_transaksi
+);
         DB::transaction(function () use ($transaksi) {
             foreach ($transaksi->details as $detail) {
                 $detail->produk->increment('stok', $detail->jumlah);
@@ -272,7 +288,9 @@ if ($pelanggan->member && $pelanggan->member->status == 'aktif') {
 
         return redirect()->route('transaksi.index')
                          ->with('success', 'Transaksi berhasil dihapus!');
+                         
     }
+    
 
     
 }

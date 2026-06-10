@@ -29,6 +29,11 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
+
+        \App\Models\ActivityLog::catat(
+    'Auth', 'login',
+    auth()->user()->name . ' login ke sistem'
+);
     }
 
     /**
@@ -43,5 +48,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+        \App\Models\ActivityLog::catat(
+    'Auth', 'logout',
+    auth()->user()->name . ' logout dari sistem'
+);
     }
 }
