@@ -170,6 +170,8 @@
                     </select>
                 </div>
 
+                
+
                 {{-- Diskon --}}
                 <div class="form-group">
                     <label class="font-weight-bold">Diskon</label>
@@ -319,6 +321,43 @@
                 </button>
                 <button type="button" id="btnSimpanPelanggan" class="btn btn-success">
                     <i class="fas fa-save"></i> Simpan & Pilih
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal QRIS --}}
+<div class="modal fade" id="modalQris" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-qrcode mr-2"></i>Scan QRIS
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                @if(\App\Models\Pengaturan::get('qris_image'))
+                    <img src="{{ asset('storage/' . \App\Models\Pengaturan::get('qris_image')) }}"
+                         class="img-fluid mb-3" style="max-width: 250px;">
+                    <h5 class="font-weight-bold text-primary" id="qrisNominal">
+                        Total: Rp 0
+                    </h5>
+                    <p class="text-muted small">
+                        Minta pelanggan scan QR di atas menggunakan aplikasi e-wallet / mobile banking
+                    </p>
+                @else
+                    <div class="text-muted py-3">
+                        <i class="fas fa-exclamation-circle fa-2x mb-2 d-block"></i>
+                        QR Code belum diatur.<br>
+                        Hubungi admin untuk upload QR Code di menu Pengaturan.
+                    </div>
+                @endif
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-block" data-dismiss="modal">
+                    <i class="fas fa-check mr-1"></i>Sudah Dibayar
                 </button>
             </div>
         </div>
@@ -546,6 +585,20 @@ document.getElementById('metodeBayar').addEventListener('change', function() {
     if (tipeBayar === 'lunas') {
         document.getElementById('infoBayar').style.display =
             this.value === 'tunai' ? 'block' : 'none';
+    }
+});
+
+// ================================================
+// TAMPILKAN MODAL QRIS
+// ================================================
+document.getElementById('metodeBayar').addEventListener('change', function() {
+    if (this.value === 'qris') {
+        const grandTotal = document.getElementById('grandTotalFinal').value;
+        const qrisNominal = document.getElementById('qrisNominal');
+        if (qrisNominal) {
+            qrisNominal.innerText = 'Total: Rp ' + grandTotal;
+        }
+        $('#modalQris').modal('show');
     }
 });
 

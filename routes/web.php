@@ -19,6 +19,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\PengaturanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +27,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
+Route::put('/pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
+Route::delete('/pengaturan/qris/hapus', [PengaturanController::class, 'hapusQris'])->name('pengaturan.qris.hapus');
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
 Route::post('/backup/buat', [BackupController::class, 'buat'])->name('backup.buat');
 Route::get('/backup/download', [BackupController::class, 'download'])->name('backup.download');
