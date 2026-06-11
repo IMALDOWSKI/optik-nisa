@@ -9,6 +9,10 @@
 </div>
 
 <div class="card shadow mb-4">
+    <a href="{{ route('produk.barcode', $produk) }}"
+   class="btn btn-secondary btn-sm" target="_blank">
+    <i class="fas fa-barcode mr-1"></i>Cetak Label Barcode
+</a>
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">{{ $produk->nama_produk }}</h6>
         <code>{{ $produk->kode_produk }}</code>

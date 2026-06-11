@@ -62,7 +62,9 @@ Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->na
     Route::resource('pelanggan', PelangganController::class);
     Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
 
-    Route::resource('produk', ProdukController::class);
+    Route::get('/produk/barcode/cetak-massal', [ProdukController::class, 'cetakBarcodeMassal'])->name('produk.barcode.massal');
+Route::get('/produk/{produk}/barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.barcode');
+Route::resource('produk', ProdukController::class);
 
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->name('transaksi.struk');

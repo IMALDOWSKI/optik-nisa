@@ -7,28 +7,33 @@ use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-public function index()
-{
-    $query = Produk::latest();
+    public function index()
+    {
+        $query = Produk::latest();
 
-    // Filter berdasarkan kategori
-    if (request('kategori')) {
-        $query->where('kategori', request('kategori'));
+        // Filter berdasarkan kategori
+        if (request('kategori')) {
+            $query->where('kategori', request('kategori'));
+        }
+
+        $produks = $query->paginate(10);
+        return view('produk.index', compact('produks'));
     }
 
-    $produks = $query->paginate(10);
-    return view('produk.index', compact('produks'));
-}
+    public function create()
+    {
+        return view('produk.create');
+    }
+
     public function store(Request $request)
     {
-// Di method store
-$request->validate([
-    'nama_produk' => 'required',
-    'kategori'    => 'required',
-    'harga'       => 'required|numeric',
-    'stok'        => 'required|integer',
-    'barcode'     => 'nullable|unique:produks,barcode',
-]);
+        $request->validate([
+            'nama_produk' => 'required',
+            'kategori'    => 'required',
+            'harga'       => 'required|numeric',
+            'stok'        => 'required|integer',
+            'barcode'     => 'nullable|unique:produks,barcode',
+        ]);
 
         $data = $request->all();
         $data['kode_produk'] = Produk::generateKode($request->kategori);
@@ -49,13 +54,14 @@ $request->validate([
 
     public function update(Request $request, Produk $produk)
     {
-$request->validate([
-    'nama_produk' => 'required',
-    'kategori'    => 'required',
-    'harga'       => 'required|numeric',
-    'stok'        => 'required|integer',
-    'barcode'     => 'nullable|unique:produks,barcode,' . $produk->id,
-]);
+        $request->validate([
+            'nama_produk' => 'required',
+            'kategori'    => 'required',
+            'harga'       => 'required|numeric',
+            'stok'        => 'required|integer',
+            'barcode'     => 'nullable|unique:produks,barcode,' . $produk->id,
+        ]);
+
         $produk->update($request->all());
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate!');
     }
@@ -64,5 +70,17 @@ $request->validate([
     {
         $produk->delete();
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
+    }
+
+public function cetakBarcode(Produk $produk)
+{
+    dd('BERHASIL MASUK!', $produk->nama_produk);
+    return view('produk.barcode', compact('produk'));
+}
+
+    public function cetakBarcodeMassal(Request $request)
+    {
+        $produks = Produk::where('status', 'aktif')->get();
+        return view('produk.barcode_massal', compact('produks'));
     }
 }
