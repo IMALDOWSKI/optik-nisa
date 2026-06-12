@@ -196,7 +196,7 @@
         <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span>
+                <span>{{ __('menu.dashboard') }}</span>
             </a>
         </li>
 
@@ -213,7 +213,7 @@
         <li class="nav-item {{ Request::is('pelanggan*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('pelanggan.index') }}">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Pelanggan</span>
+                <span>{{ __('menu.pelanggan') }}</span>
             </a>
         </li>
 
@@ -227,7 +227,7 @@
         <li class="nav-item {{ Request::is('produk*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('produk.index') }}">
                 <i class="fas fa-fw fa-glasses"></i>
-                <span>Produk</span>
+                <span>{{ __('menu.produk') }}</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('restok*') ? 'active' : '' }}">
@@ -247,7 +247,7 @@
         <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
                 <i class="fas fa-fw fa-shopping-cart"></i>
-                <span>Transaksi</span>
+                <span>{{ __('menu.transaksi') }}</span>
             </a>
         </li>
 
@@ -407,6 +407,27 @@
                 </button>
 
                 <ul class="navbar-nav ml-auto">
+
+                    {{-- Language Switcher --}}
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-globe fa-fw"></i>
+                            <span class="ml-1">{{ app()->getLocale() == 'id' ? '🇮🇩 ID' : '🇬🇧 EN' }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="langDropdown">
+                            <a class="dropdown-item {{ app()->getLocale() == 'id' ? 'active' : '' }}"
+                               href="{{ route('lang.switch', 'id') }}">
+                                🇮🇩 Bahasa Indonesia
+                            </a>
+                            <a class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}"
+                               href="{{ route('lang.switch', 'en') }}">
+                                🇬🇧 English
+                            </a>
+                        </div>
+                    </li>
+
+
 
                     <!-- Notifikasi Stok -->
 @php

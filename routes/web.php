@@ -22,6 +22,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\AntrianController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,6 +30,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/lang/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
     // Display antrian - bisa diakses tanpa login (untuk TV/monitor toko)
 Route::get('/antrian/display', [AntrianController::class, 'display'])->name('antrian.display');
 Route::get('/antrian', [AntrianController::class, 'index'])->name('antrian.index');

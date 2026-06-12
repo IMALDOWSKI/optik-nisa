@@ -4,7 +4,7 @@
 
 {{-- Judul --}}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{ __('menu.dashboard') }}</h1>
     <span class="text-muted small">
         <i class="fas fa-calendar mr-1"></i>
         {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
@@ -39,7 +39,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Pendapatan Hari Ini
+                            {{ __('menu.pendapatan_hari_ini') }}
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             Rp {{ number_format($pendapatanHariIni, 0, ',', '.') }}
@@ -102,7 +102,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Total Pelanggan
+                            {{ __('menu.total_pelanggan') }}
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $totalPelanggan }}
