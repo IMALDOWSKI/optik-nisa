@@ -21,6 +21,7 @@ use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\AntrianController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    // Display antrian - bisa diakses tanpa login (untuk TV/monitor toko)
+Route::get('/antrian/display', [AntrianController::class, 'display'])->name('antrian.display');
+Route::get('/antrian', [AntrianController::class, 'index'])->name('antrian.index');
+Route::post('/antrian', [AntrianController::class, 'store'])->name('antrian.store');
+Route::post('/antrian/{antrian}/panggil', [AntrianController::class, 'panggil'])->name('antrian.panggil');
+Route::post('/antrian/{antrian}/selesai', [AntrianController::class, 'selesai'])->name('antrian.selesai');
+Route::post('/antrian/{antrian}/batal', [AntrianController::class, 'batal'])->name('antrian.batal');
+Route::delete('/antrian/reset', [AntrianController::class, 'reset'])->name('antrian.reset');
+
     Route::resource('jadwal', JadwalController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
 Route::post('/jadwal/{jadwal}/update-status', [JadwalController::class, 'updateStatus'])->name('jadwal.update-status');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');

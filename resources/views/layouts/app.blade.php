@@ -268,6 +268,13 @@
     </a>
 </li>
 
+<li class="nav-item {{ Request::is('antrian*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('antrian.index') }}">
+        <i class="fas fa-fw fa-ticket-alt"></i>
+        <span>Antrian Digital</span>
+    </a>
+</li>
+
         <li class="nav-item {{ Request::is('hutang*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('hutang.index') }}">
         <i class="fas fa-fw fa-file-invoice-dollar"></i>
