@@ -165,6 +165,186 @@
         body.dark-mode .dark-mode-toggle {
             color: #f6c343 !important;
         }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+
+        /* Tablet & HP (max 768px) */
+        @media (max-width: 768px) {
+
+            /* Judul halaman lebih kecil */
+            h1.h3 {
+                font-size: 1.3rem !important;
+            }
+
+            /* Card padding lebih kecil */
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            /* Header halaman (judul + tombol) jadi vertikal */
+            .d-sm-flex.align-items-center.justify-content-between {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 10px;
+            }
+
+            .d-sm-flex.align-items-center.justify-content-between > div,
+            .d-sm-flex.align-items-center.justify-content-between a.btn {
+                width: 100%;
+            }
+
+            .d-sm-flex.align-items-center.justify-content-between a.btn {
+                text-align: center;
+            }
+
+            /* Statistik card - jangan terlalu padat */
+            .border-left-primary, .border-left-success,
+            .border-left-info, .border-left-warning,
+            .border-left-danger, .border-left-secondary {
+                margin-bottom: 0.75rem;
+            }
+
+            /* Tabel - font lebih kecil supaya tidak terlalu lebar */
+            .table {
+                font-size: 0.8rem;
+            }
+
+            .table th, .table td {
+                padding: 0.5rem !important;
+                white-space: nowrap;
+            }
+
+            /* Tombol aksi di tabel - susun rapi */
+            .table .btn-sm {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+
+            /* Form inline (filter) jadi vertikal */
+            form.form-inline {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+
+            form.form-inline .form-group {
+                margin-bottom: 0.75rem !important;
+                width: 100%;
+            }
+
+            form.form-inline .form-group select,
+            form.form-inline .form-group input {
+                width: 100% !important;
+            }
+
+            form.form-inline .btn {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            /* Modal full width di HP */
+            .modal-dialog {
+                margin: 10px;
+            }
+
+            /* Chart canvas - batasi tinggi di HP */
+            canvas {
+                max-height: 280px !important;
+            }
+
+            /* Sidebar brand text */
+            .sidebar-brand-text {
+                font-size: 0.95rem !important;
+            }
+
+            /* Topbar - kurangi spacing */
+            .topbar-divider {
+                margin: 0 0.5rem !important;
+            }
+
+            .navbar-nav .nav-item {
+                margin: 0 !important;
+            }
+
+            /* User dropdown - sembunyikan nama di HP kecil */
+            #userDropdown .text-gray-600 {
+                display: none !important;
+            }
+
+            /* Card kartu member - sesuaikan padding */
+            .card-body[style*="padding: 1.5rem"],
+            .card-body.p-4 {
+                padding: 1rem !important;
+            }
+        }
+
+        /* HP Kecil (max 576px) */
+        @media (max-width: 576px) {
+
+            .container-fluid {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            h1.h3 {
+                font-size: 1.15rem !important;
+            }
+
+            /* Statistik value - kecilkan */
+            .h5.mb-0.font-weight-bold,
+            .h5.font-weight-bold {
+                font-size: 1rem !important;
+            }
+
+            /* Tabel makin kecil */
+            .table {
+                font-size: 0.72rem;
+            }
+
+            /* Sembunyikan kolom kurang penting di tabel (tambahkan class d-none-mobile manual jika perlu) */
+            .d-none-mobile {
+                display: none !important;
+            }
+
+            /* Tombol grup jadi block penuh */
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-group .btn {
+                width: 100%;
+                margin-bottom: 4px;
+                border-radius: 8px !important;
+            }
+
+            /* Pagination lebih kecil */
+            .pagination {
+                font-size: 0.8rem;
+            }
+
+            /* Sidebar toggle lebih mudah ditekan */
+            #sidebarToggleTop {
+                font-size: 1.3rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        /* Perbaikan umum: tabel selalu scroll horizontal di semua ukuran kecil */
+        .table-responsive {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Perbaikan: card shadow lebih ringan di HP biar tidak berat render */
+        @media (max-width: 768px) {
+            .card {
+                box-shadow: 0 1px 6px rgba(26,58,92,0.08) !important;
+            }
+            .card:hover {
+                transform: none !important;
+            }
+        }
         /* ===== WARNA UTAMA NAVY BLUE ===== */
         :root {
             --primary: #1a3a5c;
