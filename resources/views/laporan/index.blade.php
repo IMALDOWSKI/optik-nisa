@@ -14,6 +14,10 @@
            class="btn btn-success btn-sm shadow-sm">
             <i class="fas fa-file-excel"></i> Export Excel (CSV)
         </a>
+        <a href="{{ route('laporan.print', ['bulan' => $bulan, 'tahun' => $tahun, 'status' => $status]) }}"
+   target="_blank" class="btn btn-secondary btn-sm">
+    <i class="fas fa-print mr-1"></i>Print dari Browser
+</a>
     </div>
 </div>
 

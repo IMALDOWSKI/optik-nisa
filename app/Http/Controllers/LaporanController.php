@@ -228,6 +228,31 @@ class LaporanController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
+    // ===== PRINT VIEW (Browser Print) =====
+public function printView(Request $request)
+{
+    $bulan  = $request->bulan ?? Carbon::now()->month;
+    $tahun  = $request->tahun ?? Carbon::now()->year;
+    $status = $request->status ?? '';
+
+    $query = Transaksi::with(['pelanggan', 'details.produk', 'user'])
+                ->whereMonth('tanggal_transaksi', $bulan)
+                ->whereYear('tanggal_transaksi', $tahun);
+
+    if ($status !== '') {
+        $query->where('status', $status);
+    }
+
+    $transaksis      = $query->orderBy('tanggal_transaksi', 'desc')->get();
+    $totalPendapatan = $transaksis->where('status', 'selesai')->sum('grand_total');
+    $totalDiskon     = $transaksis->where('status', 'selesai')->sum('diskon');
+    $daftarBulan     = $this->daftarBulan();
+
+    return view('laporan.print', compact(
+        'transaksis', 'totalPendapatan', 'totalDiskon', 'bulan', 'tahun', 'daftarBulan'
+    ));
+}
+
     // ===== HELPER =====
     private function daftarBulan()
     {

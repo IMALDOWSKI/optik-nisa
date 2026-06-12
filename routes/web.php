@@ -119,6 +119,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/laporan/keuangan', [LaporanController::class, 'keuangan'])->name('laporan.keuangan');
     Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
     Route::get('/laporan/export-csv', [LaporanController::class, 'exportCsv'])->name('laporan.csv');
+    Route::get('/laporan/print', [LaporanController::class, 'printView'])->name('laporan.print');
 });
 
 });
