@@ -10,6 +10,161 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <style>
+        /* ===== DARK MODE ===== */
+        body.dark-mode {
+            background-color: #1a1d29 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode #content-wrapper {
+            background: #1a1d29 !important;
+        }
+
+        body.dark-mode .card {
+            background-color: #242837 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .card-header {
+            background-color: #242837 !important;
+            border-bottom: 2px solid #343a4d !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .table {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .table td,
+        body.dark-mode .table th {
+            border-color: #343a4d !important;
+        }
+
+        body.dark-mode .table tbody tr:hover {
+            background: #2d3245 !important;
+        }
+
+        body.dark-mode .thead-light th,
+        body.dark-mode .thead-dark th {
+            background-color: #2d3245 !important;
+            color: #e0e0e0 !important;
+            border-color: #343a4d !important;
+        }
+
+        body.dark-mode .topbar {
+            background-color: #242837 !important;
+            border-bottom: 2px solid #343a4d !important;
+        }
+
+        body.dark-mode .navbar-light .navbar-nav .nav-link {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #2d3245 !important;
+            border-color: #343a4d !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .form-control:focus {
+            background-color: #2d3245 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .form-control::placeholder {
+            color: #8a8fa3 !important;
+        }
+
+        body.dark-mode .text-gray-800,
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3,
+        body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .dropdown-menu {
+            background-color: #242837 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .dropdown-item {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .dropdown-item:hover {
+            background-color: #2d3245 !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .dropdown-divider {
+            border-color: #343a4d !important;
+        }
+
+        body.dark-mode .sticky-footer {
+            background-color: #242837 !important;
+            border-top: 1px solid #343a4d !important;
+        }
+
+        body.dark-mode .sticky-footer .text-muted {
+            color: #8a8fa3 !important;
+        }
+
+        body.dark-mode .alert-success {
+            background-color: #1f4030 !important;
+            color: #7fffa0 !important;
+        }
+
+        body.dark-mode .alert-danger {
+            background-color: #4a1f24 !important;
+            color: #ff8a94 !important;
+        }
+
+        body.dark-mode .alert-info {
+            background-color: #1f3a4a !important;
+            color: #7fd4ff !important;
+        }
+
+        body.dark-mode .alert-warning {
+            background-color: #4a3c1f !important;
+            color: #ffd97f !important;
+        }
+
+        body.dark-mode code {
+            background-color: #2d3245 !important;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        body.dark-mode hr {
+            border-color: #343a4d !important;
+        }
+
+        body.dark-mode .border-borderless td,
+        body.dark-mode .table-borderless td {
+            border: none !important;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #242837 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .close {
+            color: #e0e0e0 !important;
+        }
+
+        /* Toggle Switch Dark Mode */
+        .dark-mode-toggle {
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #6c757d;
+            transition: color 0.2s;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            color: #f6c343 !important;
+        }
         /* ===== WARNA UTAMA NAVY BLUE ===== */
         :root {
             --primary: #1a3a5c;
@@ -408,6 +563,15 @@
 
                 <ul class="navbar-nav ml-auto">
 
+                    {{-- Dark Mode Toggle --}}
+                    <li class="nav-item d-flex align-items-center mx-2">
+                        <a href="#" id="darkModeToggle" class="nav-link dark-mode-toggle" title="Toggle Dark Mode">
+                            <i class="fas fa-moon" id="darkModeIcon"></i>
+                        </a>
+                    </li>
+
+                    {{-- Language Switcher --}}
+
                     {{-- Language Switcher --}}
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button"
@@ -573,6 +737,165 @@
         font-size: 14px;
     }
 </style>
+<script>
+    // ================================================
+    // DARK MODE TOGGLE
+    // ================================================
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon   = document.getElementById('darkModeIcon');
+    const body           = document.body;
+
+    // Cek preferensi tersimpan
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+
+    darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        body.classList.toggle('dark-mode');
+
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+
+        if (isDark) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+    });
+</script>
+
+<script>
+    // ================================================
+    // DARK MODE TOGGLE
+    // ================================================
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon   = document.getElementById('darkModeIcon');
+    const body           = document.body;
+
+    // Cek preferensi tersimpan
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+
+    darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        body.classList.toggle('dark-mode');
+
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+
+        if (isDark) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+    });
+</script>
+<script>
+    // ================================================
+    // DARK MODE TOGGLE
+    // ================================================
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon   = document.getElementById('darkModeIcon');
+    const body           = document.body;
+
+    // Cek preferensi tersimpan
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+
+    darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        body.classList.toggle('dark-mode');
+
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+
+        if (isDark) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+    });
+</script>
+<script>
+    // ================================================
+    // DARK MODE TOGGLE
+    // ================================================
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon   = document.getElementById('darkModeIcon');
+    const body           = document.body;
+
+    // Cek preferensi tersimpan
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+
+    darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        body.classList.toggle('dark-mode');
+
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+
+        if (isDark) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+    });
+</script>
+
+<script>
+    // ================================================
+    // DARK MODE TOGGLE
+    // ================================================
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon   = document.getElementById('darkModeIcon');
+    const body           = document.body;
+
+    // Cek preferensi tersimpan
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+
+    darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        body.classList.toggle('dark-mode');
+
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+
+        if (isDark) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+    });
+</script>
+
+
 
 @stack('scripts')
 </body>
