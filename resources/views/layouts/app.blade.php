@@ -261,6 +261,12 @@
         @endif
     </a>
 </li>
+<li class="nav-item {{ Request::is('jadwal*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('jadwal.index') }}">
+        <i class="fas fa-fw fa-calendar-alt"></i>
+        <span>Jadwal & Booking</span>
+    </a>
+</li>
 
         <li class="nav-item {{ Request::is('hutang*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('hutang.index') }}">
