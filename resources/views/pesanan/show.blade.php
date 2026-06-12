@@ -163,6 +163,19 @@
                 <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-edit mr-2"></i>Update Status
                 </h6>
+                @php
+    $pesanPesanan = "Halo *" . $pesanan->pelanggan->nama . "*,\n\n"
+                  . "Update untuk pesanan kacamata Anda 👓\n\n"
+                  . "No. Pesanan: " . $pesanan->kode_pesanan . "\n"
+                  . "Status: *" . $label['label'] . "*\n"
+                  . ($pesanan->catatan ? "Catatan: " . $pesanan->catatan . "\n" : "")
+                  . "\nTerima kasih! 😊 - Optik Nisa";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($pesanan->pelanggan->no_telepon, $pesanPesanan) }}"
+   target="_blank" class="btn btn-success btn-sm btn-block mb-3">
+    <i class="fab fa-whatsapp mr-1"></i>Kirim Update via WhatsApp
+</a>
             </div>
             <div class="card-body">
                 <form action="{{ route('pesanan.update-status', $pesanan) }}" method="POST">

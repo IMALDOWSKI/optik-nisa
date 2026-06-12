@@ -97,6 +97,18 @@
                                class="btn btn-primary btn-sm">
                                 <i class="fas fa-plus mr-1"></i>Buat Resep
                             </a>
+                            @php
+    $pesanReminder = "Halo *" . $p->nama . "*,\n\n"
+                   . "Kami dari *Optik Nisa* ingin mengingatkan bahwa sudah waktunya untuk kontrol mata kembali. 👁️\n\n"
+                   . "Kontrol mata rutin penting untuk menjaga kesehatan mata Anda.\n\n"
+                   . "Silakan kunjungi toko kami untuk pemeriksaan mata gratis!\n\n"
+                   . "Terima kasih 😊 - Optik Nisa";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($p->no_telepon, $pesanReminder) }}"
+   target="_blank" class="btn btn-success btn-sm">
+    <i class="fab fa-whatsapp"></i>
+</a>
                         </td>
                     </tr>
                     @empty
@@ -163,6 +175,18 @@
                                class="btn btn-primary btn-sm">
                                 <i class="fas fa-plus mr-1"></i>Buat Resep
                             </a>
+                            @php
+    $pesanReminder = "Halo *" . $p->nama . "*,\n\n"
+                   . "Kami dari *Optik Nisa* ingin mengingatkan bahwa sudah waktunya untuk kontrol mata kembali. 👁️\n\n"
+                   . "Kontrol mata rutin penting untuk menjaga kesehatan mata Anda.\n\n"
+                   . "Silakan kunjungi toko kami untuk pemeriksaan mata gratis!\n\n"
+                   . "Terima kasih 😊 - Optik Nisa";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($p->no_telepon, $pesanReminder) }}"
+   target="_blank" class="btn btn-success btn-sm">
+    <i class="fab fa-whatsapp"></i>
+</a>
                         </td>
                     </tr>
                     @empty
@@ -210,6 +234,18 @@
                                class="btn btn-primary btn-sm">
                                 <i class="fas fa-plus mr-1"></i>Buat Resep
                             </a>
+                            @php
+    $pesanReminder = "Halo *" . $p->nama . "*,\n\n"
+                   . "Kami dari *Optik Nisa* ingin mengingatkan bahwa sudah waktunya untuk kontrol mata kembali. 👁️\n\n"
+                   . "Kontrol mata rutin penting untuk menjaga kesehatan mata Anda.\n\n"
+                   . "Silakan kunjungi toko kami untuk pemeriksaan mata gratis!\n\n"
+                   . "Terima kasih 😊 - Optik Nisa";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($p->no_telepon, $pesanReminder) }}"
+   target="_blank" class="btn btn-success btn-sm">
+    <i class="fab fa-whatsapp"></i>
+</a>
                         </td>
                     </tr>
                     @empty

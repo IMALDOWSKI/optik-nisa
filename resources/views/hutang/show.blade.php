@@ -68,6 +68,21 @@
                                 <td class="text-danger font-weight-bold">
                                     Rp {{ number_format($hutang->sisa_hutang, 0, ',', '.') }}
                                 </td>
+                                @php
+    $pesanHutang = "Halo *" . $hutang->pelanggan->nama . "*,\n\n"
+                 . "Kami informasikan bahwa Anda memiliki sisa pembayaran di *Optik Nisa*:\n\n"
+                 . "No. Transaksi: " . $hutang->transaksi->kode_transaksi . "\n"
+                 . "Total Tagihan: Rp " . number_format($hutang->total_tagihan, 0, ',', '.') . "\n"
+                 . "Sudah Dibayar: Rp " . number_format($hutang->total_bayar, 0, ',', '.') . "\n"
+                 . "*Sisa: Rp " . number_format($hutang->sisa_hutang, 0, ',', '.') . "*\n"
+                 . ($hutang->jatuh_tempo ? "Jatuh Tempo: " . \Carbon\Carbon::parse($hutang->jatuh_tempo)->format('d/m/Y') . "\n" : "")
+                 . "\nMohon untuk segera melunasi. Terima kasih 😊";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($hutang->pelanggan->no_telepon, $pesanHutang) }}"
+   target="_blank" class="btn btn-success btn-block mb-3">
+    <i class="fab fa-whatsapp mr-2"></i>Kirim Reminder via WhatsApp
+</a>
                             </tr>
                         </table>
                     </div>

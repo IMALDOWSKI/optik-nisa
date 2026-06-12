@@ -12,6 +12,21 @@
            class="btn btn-success btn-sm shadow-sm mr-2" target="_blank">
             <i class="fas fa-print"></i> Cetak Struk
         </a>
+        @php
+    $pesanWa = "Halo *" . $transaksi->pelanggan->nama . "*,\n\n"
+             . "Terima kasih telah berbelanja di *Optik Nisa*! 🙏\n\n"
+             . "📋 *Detail Transaksi:*\n"
+             . "No. Transaksi: " . $transaksi->kode_transaksi . "\n"
+             . "Tanggal: " . \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d/m/Y') . "\n"
+             . "Total: Rp " . number_format($transaksi->grand_total, 0, ',', '.') . "\n"
+             . "Status: " . ucfirst($transaksi->status) . "\n\n"
+             . "Terima kasih! 😊";
+@endphp
+
+<a href="{{ \App\Helpers\WhatsappHelper::link($transaksi->pelanggan->no_telepon, $pesanWa) }}"
+   target="_blank" class="btn btn-success btn-sm">
+    <i class="fab fa-whatsapp mr-1"></i>Kirim via WhatsApp
+</a>
         <a href="{{ route('transaksi.index') }}" class="btn btn-secondary btn-sm">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
