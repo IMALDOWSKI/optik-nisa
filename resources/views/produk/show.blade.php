@@ -9,7 +9,7 @@
 </div>
 
 <div class="card shadow mb-4">
-    <a href="{{ route('produk.barcode', $produk) }}"
+<a href="{{ route('cetak.barcode.produk', $produk) }}"
    class="btn btn-secondary btn-sm" target="_blank">
     <i class="fas fa-barcode mr-1"></i>Cetak Label Barcode
 </a>

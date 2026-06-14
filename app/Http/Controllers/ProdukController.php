@@ -74,7 +74,7 @@ class ProdukController extends Controller
 
 public function cetakBarcode(Produk $produk)
 {
-    dd('BERHASIL MASUK!', $produk->nama_produk);
+    
     return view('produk.barcode', compact('produk'));
 }
 

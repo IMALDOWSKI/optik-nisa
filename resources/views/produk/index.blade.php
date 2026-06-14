@@ -83,11 +83,11 @@
                                class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="{{ route('produk.barcode', $p) }}"
-                               class="btn btn-secondary btn-sm" title="Cetak Barcode"
-                               target="_blank">
-                                <i class="fas fa-barcode"></i>
-                            </a>
+                            <a href="{{ route('cetak.barcode.produk', $p) }}"
+   class="btn btn-secondary btn-sm" title="Cetak Barcode"
+   target="_blank">
+    <i class="fas fa-barcode"></i>
+</a>
                             <form action="{{ route('produk.destroy', $p) }}"
                                   method="POST" style="display:inline">
                                 @csrf @method('DELETE')

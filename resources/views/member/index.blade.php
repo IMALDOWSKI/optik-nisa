@@ -89,8 +89,8 @@
                             </span>
                         </td>
                         <td>
-                            Rp {{ number_format(Member::nilaiPoin($m->poinAktif()), 0, ',', '.') }}
-                        </td>
+    Rp {{ number_format(\App\Models\Member::nilaiPoin($m->poinAktif()), 0, ',', '.') }}
+</td>
                         <td>{{ \Carbon\Carbon::parse($m->tanggal_bergabung)->format('d/m/Y') }}</td>
                         <td>
                             <span class="badge badge-{{ $m->status == 'aktif' ? 'success' : 'danger' }}">

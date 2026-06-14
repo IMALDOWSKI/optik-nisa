@@ -32,7 +32,6 @@ return [
     'profile'         => 'Profil Saya',
     'logout'          => 'Keluar',
 
-    // Dashboard
     'selamat_datang'      => 'Selamat datang kembali',
     'pendapatan_hari_ini' => 'Pendapatan Hari Ini',
     'pendapatan_bulan_ini'=> 'Pendapatan Bulan Ini',

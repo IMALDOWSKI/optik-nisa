@@ -65,11 +65,14 @@
                         <td>
                             <strong>{{ $k->user->name ?? 'Unknown' }}</strong>
                         </td>
-                        <td>
-                            <span class="badge badge-{{ $k->user->role == 'admin' ? 'danger' : 'info' }}">
-                                {{ ucfirst($k->user->role ?? '-') }}
-                            </span>
-                        </td>
+<td>
+    <strong>{{ $k->user?->name ?? 'Unknown (Transaksi Lama)' }}</strong>
+</td>
+<td>
+    <span class="badge badge-{{ ($k->user?->role ?? '') == 'admin' ? 'danger' : 'info' }}">
+        {{ ucfirst($k->user?->role ?? '-') }}
+    </span>
+</td>
                         <td>{{ $k->total_transaksi }} transaksi</td>
                         <td>Rp {{ number_format($k->total_pendapatan, 0, ',', '.') }}</td>
                         <td>Rp {{ number_format($k->total_diskon, 0, ',', '.') }}</td>

@@ -156,12 +156,12 @@
     <h6>📦 Pilih Produk yang Ingin Dicetak Labelnya:</h6>
     @foreach($produks as $p)
     <div class="produk-item">
-        <input type="checkbox" id="produk_{{ $p->id }}"
-               class="produk-check"
-               data-kode="{{ $p->barcode ?? $p->kode_produk }}"
-               data-nama="{{ $p->nama_produk }}"
-               data-harga="{{ number_format($p->harga, 0, ',', '.') }}"
-               value="{{ $p->id }}">
+<input type="checkbox" id="produk_{{ $p->id }}"
+       class="produk-check"
+       data-kode="{{ $p->barcode ?: ($p->kode_produk ?: 'PRD' . str_pad($p->id, 5, '0', STR_PAD_LEFT)) }}"
+       data-nama="{{ $p->nama_produk }}"
+       data-harga="{{ number_format($p->harga, 0, ',', '.') }}"
+       value="{{ $p->id }}">
         <label for="produk_{{ $p->id }}">
             <strong>{{ $p->nama_produk }}</strong>
             <span style="color:#666; font-size:12px;">
@@ -210,27 +210,37 @@
             const harga  = cb.dataset.harga;
             const jumlah = parseInt(document.querySelector('.jumlah-' + id).value) || 1;
 
-            for (let i = 0; i < jumlah; i++) {
-                const idx = labelCount++;
-                const div = document.createElement('div');
-                div.className = 'label-card';
-                div.innerHTML = `
-                    <div class="toko-nama">OPTIK NISA</div>
-                    <div class="produk-nama">${nama}</div>
-                    <svg class="barcode-gen-${idx}"></svg>
-                    <div class="kode">${kode}</div>
-                    <div class="harga">Rp ${harga}</div>
-                `;
-                container.appendChild(div);
+for (let i = 0; i < jumlah; i++) {
+    const idx = labelCount++;
+    const div = document.createElement('div');
+    div.className = 'label-card';
 
-                JsBarcode(`.barcode-gen-${idx}`, kode, {
-                    format      : 'CODE128',
-                    width       : 1.5,
-                    height      : 35,
-                    displayValue: false,
-                    margin      : 0,
-                });
-            }
+    // Pastikan kode tidak kosong
+    const kodeBarcode = kode && kode.trim() !== '' ? kode : 'NOCODE';
+
+    div.innerHTML = `
+        <div class="toko-nama">OPTIK NISA</div>
+        <div class="produk-nama">${nama}</div>
+        <svg class="barcode-gen-${idx}"></svg>
+        <div class="kode">${kodeBarcode}</div>
+        <div class="harga">Rp ${harga}</div>
+    `;
+    container.appendChild(div);
+
+    try {
+        JsBarcode(`.barcode-gen-${idx}`, kodeBarcode, {
+            format      : 'CODE128',
+            width       : 1.5,
+            height      : 35,
+            displayValue: false,
+            margin      : 0,
+        });
+    } catch (e) {
+        console.warn('Gagal generate barcode untuk:', nama, e);
+        document.querySelector(`.barcode-gen-${idx}`).outerHTML =
+            '<div style="font-size:10px;color:red;padding:10px 0;">Barcode tidak valid</div>';
+    }
+}
         });
     }
 </script>

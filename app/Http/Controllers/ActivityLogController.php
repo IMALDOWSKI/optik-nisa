@@ -13,22 +13,18 @@ class ActivityLogController extends Controller
     {
         $query = ActivityLog::with('user')->latest();
 
-        // Filter user
         if ($request->user_id) {
             $query->where('user_id', $request->user_id);
         }
 
-        // Filter modul
         if ($request->modul) {
             $query->where('modul', $request->modul);
         }
 
-        // Filter aksi
         if ($request->aksi) {
             $query->where('aksi', $request->aksi);
         }
 
-        // Filter tanggal
         if ($request->tanggal) {
             $query->whereDate('created_at', $request->tanggal);
         }
@@ -48,7 +44,6 @@ class ActivityLogController extends Controller
 
     public function hapusLama()
     {
-        // Hapus log lebih dari 30 hari
         ActivityLog::where('created_at', '<', Carbon::now()->subDays(30))->delete();
         return redirect()->route('activity-log.index')
                          ->with('success', 'Log lama berhasil dihapus!');

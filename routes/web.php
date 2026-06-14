@@ -30,6 +30,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/cetak-barcode-produk/{produk}', [ProdukController::class, 'cetakBarcode'])->name('cetak.barcode.produk');
+
     Route::get('/lang/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
     // Display antrian - bisa diakses tanpa login (untuk TV/monitor toko)
 Route::get('/antrian/display', [AntrianController::class, 'display'])->name('antrian.display');
@@ -82,7 +85,7 @@ Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->na
     Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
 
     Route::get('/produk/barcode/cetak-massal', [ProdukController::class, 'cetakBarcodeMassal'])->name('produk.barcode.massal');
-Route::get('/produk/{produk}/barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.barcode');
+
 Route::resource('produk', ProdukController::class);
 
     Route::resource('transaksi', TransaksiController::class);
