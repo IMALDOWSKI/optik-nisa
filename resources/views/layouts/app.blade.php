@@ -510,6 +510,7 @@
             border-radius: 3px;
         }
     </style>
+@yield('styles')
 </head>
 
 <body id="page-top">

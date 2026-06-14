@@ -2,19 +2,27 @@
 
 @section('content')
 
-{{-- Judul --}}
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">{{ __('menu.dashboard') }}</h1>
-    <span class="text-muted small">
-        <i class="fas fa-calendar mr-1"></i>
-        {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
-    </span>
+{{-- Welcome Banner --}}
+<div class="welcome-banner mb-4">
+    <div class="welcome-content">
+        <div class="welcome-text">
+            <h2>
+                {{ __('menu.selamat_datang') }},
+                <strong>{{ auth()->user()->name }}</strong>! 👋
+            </h2>
+            <p>
+                {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }} —
+                Berikut ringkasan aktivitas toko hari ini.
+            </p>
+        </div>
+        <div class="welcome-icon">👓</div>
+    </div>
 </div>
 
 {{-- BARIS 1: Statistik Hari Ini --}}
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card stat-card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -34,7 +42,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
+        <div class="card stat-card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -54,7 +62,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
+        <div class="card stat-card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -74,12 +82,12 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card stat-card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pendapatan Bulan Ini
+                            {{ __('menu.pendapatan_bulan_ini') }}
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             Rp {{ number_format($pendapatanBulanIni, 0, ',', '.') }}
@@ -97,7 +105,7 @@
 {{-- BARIS 2: Statistik Tambahan --}}
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card stat-card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -120,7 +128,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
+        <div class="card stat-card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -140,7 +148,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card stat-card border-left-danger shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -160,7 +168,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card stat-card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -180,9 +188,8 @@
     </div>
 </div>
 
-{{-- BARIS 3: Grafik Pendapatan & Metode Bayar --}}
+{{-- BARIS 3: Grafik --}}
 <div class="row">
-    {{-- Grafik Pendapatan --}}
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -196,7 +203,6 @@
         </div>
     </div>
 
-    {{-- Grafik Metode Bayar --}}
     <div class="col-xl-4 col-lg-5">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -219,9 +225,8 @@
     </div>
 </div>
 
-{{-- BARIS 4: Penjualan per Kategori & Produk Terlaris --}}
+{{-- BARIS 4: Kategori & Produk Terlaris --}}
 <div class="row">
-    {{-- Penjualan per Kategori --}}
     <div class="col-xl-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -235,7 +240,6 @@
         </div>
     </div>
 
-    {{-- Produk Terlaris --}}
     <div class="col-xl-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -279,8 +283,9 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center text-muted">
-                                    Belum ada data
+                                <td colspan="5" class="text-center py-4">
+                                    <i class="fas fa-box-open fa-2x text-gray-300 d-block mb-2"></i>
+                                    <span class="text-muted">Belum ada data penjualan</span>
                                 </td>
                             </tr>
                             @endforelse
@@ -292,9 +297,8 @@
     </div>
 </div>
 
-{{-- BARIS 5: Transaksi Terbaru, Stok Menipis & Garansi --}}
+{{-- BARIS 5: Transaksi Terbaru & Stok Menipis --}}
 <div class="row">
-    {{-- Transaksi Terbaru --}}
     <div class="col-xl-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -330,8 +334,9 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-3">
-                                    Belum ada transaksi
+                                <td colspan="4" class="text-center py-4">
+                                    <i class="fas fa-receipt fa-2x text-gray-300 d-block mb-2"></i>
+                                    <span class="text-muted">Belum ada transaksi</span>
                                 </td>
                             </tr>
                             @endforelse
@@ -342,9 +347,7 @@
         </div>
     </div>
 
-    {{-- Stok Menipis & Garansi --}}
     <div class="col-xl-6">
-        {{-- Stok Menipis --}}
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-danger">
@@ -379,9 +382,9 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="3" class="text-center text-muted py-2">
-                                    <i class="fas fa-check-circle text-success"></i>
-                                    Semua stok aman!
+                                <td colspan="3" class="text-center py-4">
+                                    <i class="fas fa-check-circle fa-2x text-success d-block mb-2"></i>
+                                    <span class="text-muted">Semua stok aman!</span>
                                 </td>
                             </tr>
                             @endforelse
@@ -391,12 +394,11 @@
             </div>
         </div>
 
-        {{-- Garansi Hampir Expired --}}
         @if($garansiHampirExpired->count() > 0)
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-warning">
-                    <i class="fas fa-shield-alt mr-2"></i>Garansi Hampir Expired (7 Hari)
+                    <i class="fas fa-shield-alt mr-2"></i>Garansi Hampir Expired
                 </h6>
             </div>
             <div class="card-body p-0">
@@ -430,7 +432,75 @@
     </div>
 </div>
 
+@endsection
+
 @push('scripts')
+<style>
+    /* ===== WELCOME BANNER ===== */
+    .welcome-banner {
+        background: linear-gradient(135deg, #1a3a5c 0%, #2d5f8a 50%, #00b4d8 100%);
+        border-radius: 16px;
+        padding: 28px 35px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(26,58,92,0.25);
+    }
+
+    .welcome-banner::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .welcome-banner::after {
+        content: '';
+        position: absolute;
+        bottom: -60%;
+        right: 15%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .welcome-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.6rem;
+        margin-bottom: 6px;
+        color: white !important;
+    }
+
+    .welcome-text p {
+        opacity: 0.8;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .welcome-icon {
+        font-size: 60px;
+        opacity: 0.3;
+        animation: floatIcon 3s ease-in-out infinite;
+    }
+
+    @keyframes floatIcon {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-8px); }
+    }
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Grafik Pendapatan
@@ -482,9 +552,7 @@
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
+            plugins: { legend: { position: 'bottom' } }
         }
     });
 
@@ -502,12 +570,20 @@
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
+            plugins: { legend: { position: 'bottom' } }
         }
+    });
+
+    // ===== ANIMASI STAT CARDS =====
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, i * 100);
     });
 </script>
 @endpush
-
-@endsection
