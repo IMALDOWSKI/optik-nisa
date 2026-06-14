@@ -903,6 +903,279 @@
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+<style>
+    /* ===== GLOBAL ANIMATIONS & TRANSITIONS ===== */
+
+    /* Page transition — semua halaman fade in */
+    #content-wrapper {
+        animation: pageFadeIn 0.3s ease;
+    }
+
+    @keyframes pageFadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card hover lebih smooth */
+    .card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+    }
+
+    /* Tombol - semua tombol punya efek */
+    .btn {
+        transition: all 0.2s ease !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn:active {
+        transform: scale(0.97) !important;
+    }
+
+    /* Ripple effect pada tombol */
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 0; height: 0;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+        opacity: 0;
+    }
+
+    .btn:active::after {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+
+    /* Sidebar nav link transition */
+    .sidebar .nav-item .nav-link {
+        transition: all 0.2s ease !important;
+    }
+
+    /* Table row hover smooth */
+    .table tbody tr {
+        transition: background 0.15s ease;
+    }
+
+    /* Badge pulse untuk notifikasi */
+    .badge-counter {
+        animation: badgePulse 2s infinite;
+    }
+
+    @keyframes badgePulse {
+        0%, 100% { transform: scale(1); }
+        50%       { transform: scale(1.15); }
+    }
+
+    /* Form control focus smooth */
+    .form-control {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    /* Alert slide in */
+    .alert {
+        animation: alertSlideIn 0.4s ease;
+    }
+
+    @keyframes alertSlideIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Loading spinner global */
+    .loading-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .loading-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #e8ecf0;
+        border-top-color: #1a3a5c;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Tooltip lebih smooth */
+    [title] { cursor: help; }
+
+    /* Stat card number counter effect */
+    .stat-number {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    /* Scrollbar smooth */
+    html { scroll-behavior: smooth; }
+
+    /* Modal fade lebih smooth */
+    .modal.fade .modal-dialog {
+        transition: transform 0.25s ease, opacity 0.25s ease !important;
+        transform: translateY(-20px);
+    }
+
+    .modal.show .modal-dialog {
+        transform: translateY(0);
+    }
+
+    /* Dropdown menu smooth */
+    .dropdown-menu {
+        animation: dropdownFadeIn 0.2s ease;
+        transform-origin: top;
+    }
+
+    @keyframes dropdownFadeIn {
+        from { opacity: 0; transform: scaleY(0.95); }
+        to   { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* Active sidebar item indicator */
+    .sidebar .nav-item.active .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 60%;
+        background: #00b4d8;
+        border-radius: 0 3px 3px 0;
+        animation: slideInLeft 0.3s ease;
+    }
+
+    @keyframes slideInLeft {
+        from { height: 0; opacity: 0; }
+        to   { height: 60%; opacity: 1; }
+    }
+
+    /* Toast notification style */
+    .toast-notification {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #1a3a5c;
+        color: white;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 14px;
+        box-shadow: 0 8px 25px rgba(26,58,92,0.3);
+        z-index: 9999;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 350px;
+    }
+
+    .toast-notification.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .toast-notification.success { background: #1a7a4a; }
+    .toast-notification.error   { background: #9b2335; }
+    .toast-notification.warning { background: #8a6000; }
+</style>
+
+{{-- Loading Overlay --}}
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<script>
+    // ================================================
+    // LOADING OVERLAY — tampil saat pindah halaman
+    // ================================================
+    document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href^="javascript"])').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#' && !href.startsWith('javascript') && !this.classList.contains('dropdown-toggle')) {
+                document.getElementById('loadingOverlay').classList.add('active');
+            }
+        });
+    });
+
+    // Sembunyikan loading saat halaman selesai load
+    window.addEventListener('load', function() {
+        document.getElementById('loadingOverlay').classList.remove('active');
+    });
+
+    // ================================================
+    // AUTO-DISMISS ALERT setelah 4 detik
+    // ================================================
+    setTimeout(function() {
+        document.querySelectorAll('.alert-dismissible').forEach(function(alert) {
+            alert.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-10px)';
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 4000);
+
+    // ================================================
+    // TOAST NOTIFICATION — gantikan alert session
+    // ================================================
+    function showToast(message, type = 'success') {
+        const icons = {
+            success : '✅',
+            error   : '❌',
+            warning : '⚠️',
+        };
+
+        const toast = document.createElement('div');
+        toast.className = `toast-notification ${type}`;
+        toast.innerHTML = `<span>${icons[type] || '✅'}</span><span>${message}</span>`;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    }
+
+    // ================================================
+    // KONFIRMASI HAPUS yang lebih cantik
+    // ================================================
+    document.querySelectorAll('button[onclick*="confirm"]').forEach(btn => {
+        const originalOnclick = btn.getAttribute('onclick');
+        if (originalOnclick && originalOnclick.includes('confirm(')) {
+            const message = originalOnclick.match(/confirm\(['"](.+?)['"]\)/)?.[1] || 'Yakin melakukan aksi ini?';
+            btn.removeAttribute('onclick');
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (window.confirm(message)) {
+                    this.closest('form')?.submit();
+                }
+            });
+        }
+    });
+</script>
 
 <style>
     .avatar-circle {
