@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Optik Nisa</title>
 
+{{-- PWA Manifest --}}
+<link rel="manifest" href="{{ asset('manifest.json') }}">
+<meta name="theme-color" content="#1a3a5c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Optik Nisa">
+<link rel="apple-touch-icon" href="{{ asset('icons/icon-192x192.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('icons/icon-192x192.png') }}">
+
     <!-- SB Admin 2 CSS -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -1349,6 +1358,105 @@
     });
 </script>
 
+<script>
+    // ================================================
+    // REGISTER SERVICE WORKER (PWA)
+    // ================================================
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered');
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        });
+    }
+
+    // ================================================
+    // TOMBOL INSTALL PWA (muncul otomatis kalau bisa install)
+    // ================================================
+    let deferredPrompt;
+    const installBanner = document.createElement('div');
+    installBanner.id = 'pwaInstallBanner';
+    installBanner.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: 380px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, #1a3a5c, #2d5f8a);
+        color: white;
+        padding: 16px 20px;
+        border-radius: 14px;
+        box-shadow: 0 8px 25px rgba(26,58,92,0.4);
+        display: none;
+        align-items: center;
+        gap: 12px;
+        z-index: 9998;
+        animation: slideUpBanner 0.4s ease;
+    `;
+    installBanner.innerHTML = `
+        <div style="font-size: 28px;">👓</div>
+        <div style="flex: 1;">
+            <div style="font-weight: bold; font-size: 14px;">Install Optik Nisa</div>
+            <div style="font-size: 12px; opacity: 0.8;">Akses lebih cepat dari home screen</div>
+        </div>
+        <button id="btnInstallPwa" style="
+            background: #00b4d8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        ">Install</button>
+        <button id="btnCloseInstall" style="
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 5px;
+        ">&times;</button>
+    `;
+    document.body.appendChild(installBanner);
+
+    const styleSlide = document.createElement('style');
+    styleSlide.textContent = `
+        @keyframes slideUpBanner {
+            from { transform: translateY(100px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(styleSlide);
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBanner.style.display = 'flex';
+    });
+
+    document.getElementById('btnInstallPwa').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            installBanner.style.display = 'none';
+        }
+    });
+
+    document.getElementById('btnCloseInstall').addEventListener('click', () => {
+        installBanner.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+        installBanner.style.display = 'none';
+    });
+</script>
 
 
 @stack('scripts')
