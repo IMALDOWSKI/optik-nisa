@@ -1,8 +1,8 @@
 const CACHE_NAME = 'optik-nisa-v1';
 const urlsToCache = [
     '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png',
+    '/icons/launchericon-192x192.png',
+    '/icons/launchericon-512x512.png',
 ];
 
 // Install service worker & cache asset penting

@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Optik Nisa">
-<link rel="apple-touch-icon" href="{{ asset('icons/icon-192x192.png') }}">
-<link rel="icon" type="image/png" href="{{ asset('icons/icon-192x192.png') }}">
+<link rel="apple-touch-icon" href="{{ asset('icons/launchericon-192x192.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('icons/launchericon-192x192.png') }}">
 
     <!-- SB Admin 2 CSS -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
