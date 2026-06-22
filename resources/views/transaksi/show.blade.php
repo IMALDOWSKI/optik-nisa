@@ -105,14 +105,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transaksi->details as $d)
-                    <tr>
-                        <td>{{ $d->produk->nama_produk }}</td>
-                        <td>Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</td>
-                        <td>{{ $d->jumlah }}</td>
-                        <td>Rp {{ number_format($d->subtotal, 0, ',', '.') }}</td>
-                    </tr>
-                    @endforeach
+@foreach($transaksi->details as $d)
+<tr>
+    <td>
+        @if($d->is_frame_sendiri)
+            <span class="badge badge-info mr-1">Bawa Sendiri</span>
+            Frame Milik Pelanggan
+            @if($d->keterangan_frame_sendiri)
+                <div class="small text-muted">{{ $d->keterangan_frame_sendiri }}</div>
+            @endif
+        @else
+            {{ $d->produk->nama_produk ?? 'Produk tidak ditemukan' }}
+        @endif
+    </td>
+    <td>Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</td>
+    <td>{{ $d->jumlah }}</td>
+    <td>Rp {{ number_format($d->subtotal, 0, ',', '.') }}</td>
+</tr>
+@endforeach
                 </tbody>
                 <tfoot>
 <tfoot>

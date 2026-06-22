@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TransaksiTerpaduController;
 use App\Http\Controllers\ResepMataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanController;
@@ -81,13 +82,16 @@ Route::post('/garansi/{garansi}/klaim', [GaransiController::class, 'klaim'])->na
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('pelanggan', PelangganController::class);
-    Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
-
+Route::post('/pelanggan/ajax-store', [PelangganController::class, 'ajaxStore'])->name('pelanggan.ajax-store');
+Route::get('/pelanggan/ajax-search', [PelangganController::class, 'ajaxSearch'])->name('pelanggan.ajax-search');
+Route::get('/pelanggan/{pelanggan}/ajax-riwayat-resep', [PelangganController::class, 'ajaxRiwayatResep'])->name('pelanggan.ajax-riwayat-resep');
+Route::resource('pelanggan', PelangganController::class);
     Route::get('/produk/barcode/cetak-massal', [ProdukController::class, 'cetakBarcodeMassal'])->name('produk.barcode.massal');
 
 Route::resource('produk', ProdukController::class);
 
+    Route::get('/transaksi-baru', [TransaksiTerpaduController::class, 'create'])->name('transaksi-terpadu.create');
+Route::post('/transaksi-baru', [TransaksiTerpaduController::class, 'store'])->name('transaksi-terpadu.store');
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->name('transaksi.struk');
 

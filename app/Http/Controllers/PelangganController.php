@@ -101,4 +101,28 @@ ActivityLog::catat('Pelanggan', 'update', 'Mengupdate pelanggan: ' . $pelanggan-
         // Di destroy
 ActivityLog::catat('Pelanggan', 'delete', 'Menghapus pelanggan: ' . $pelanggan->nama);
     }
+
+    // Cari pelanggan untuk autocomplete (dipanggil dari form transaksi)
+public function ajaxSearch(Request $request)
+{
+    $keyword = $request->get('q', '');
+
+    $pelanggans = Pelanggan::where('nama', 'like', "%{$keyword}%")
+                    ->orWhere('no_telepon', 'like', "%{$keyword}%")
+                    ->orderBy('nama')
+                    ->limit(10)
+                    ->get(['id', 'nama', 'no_telepon', 'alamat']);
+
+    return response()->json($pelanggans);
+}
+
+// Ambil riwayat resep mata seorang pelanggan (format JSON, untuk form transaksi)
+public function ajaxRiwayatResep(Pelanggan $pelanggan)
+{
+    $resepMatas = $pelanggan->resepMatas()
+                    ->latest('tanggal_periksa')
+                    ->get();
+
+    return response()->json($resepMatas);
+}
 }

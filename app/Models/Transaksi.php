@@ -12,6 +12,7 @@ class Transaksi extends Model
 protected $fillable = [
     'kode_transaksi',
     'pelanggan_id',
+    'resep_mata_id',
     'user_id',
     'total_harga',
     'diskon',
@@ -38,6 +39,11 @@ public function user()
     {
         return $this->belongsTo(Pelanggan::class);
     }
+
+    public function resepMata()
+{
+    return $this->belongsTo(ResepMata::class);
+}
 
     public function details()
     {
