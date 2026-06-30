@@ -42,58 +42,51 @@
             {{ ucfirst($transaksi->status) }}
         </span>
     </div>
-    <div class="card-body">
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <small class="text-muted d-block">Pelanggan</small>
-                <strong>{{ $transaksi->pelanggan->nama }}</strong>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <small class="text-muted d-block">Pelanggan</small>
+        <strong>{{ $transaksi->pelanggan->nama }}</strong>
+    </div>
+    <div class="col-md-3">
+        <small class="text-muted d-block">Tanggal Transaksi</small>
+        <strong>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d/m/Y') }}</strong>
+    </div>
+    <div class="col-md-3">
+        <small class="text-muted d-block">Metode Pembayaran</small>
+        <strong>{{ ucfirst($transaksi->metode_bayar) }}</strong>
+    </div>
+    <div class="col-md-3">
+        <small class="text-muted d-block">Tipe Pembayaran</small>
+        @if($transaksi->hutang)
+            <span class="badge badge-warning">
+                <i class="fas fa-hand-holding-usd mr-1"></i>DP / Cicil
+            </span>
+            <div class="small text-danger mt-1">
+                Sisa: Rp {{ number_format($transaksi->hutang->sisa_hutang, 0, ',', '.') }}
             </div>
-            <div class="col-md-4">
-                <small class="text-muted d-block">Tanggal Transaksi</small>
-                <strong>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d/m/Y') }}</strong>
-            </div>
-            <div class="col-md-4">
-                <small class="text-muted d-block">Metode Pembayaran</small>
-                <strong>{{ ucfirst($transaksi->metode_bayar) }}</strong>
-            </div>
-            {{-- Tipe Bayar --}}
-<div class="form-group">
-    <label class="font-weight-bold">Tipe Pembayaran</label>
-    <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-        <label class="btn btn-outline-success active" id="btnLunas">
-            <input type="radio" name="tipe_bayar" value="lunas" checked>
-            <i class="fas fa-check-circle mr-1"></i> Lunas
-        </label>
-        <label class="btn btn-outline-warning" id="btnDp">
-            <input type="radio" name="tipe_bayar" value="dp">
-            <i class="fas fa-hand-holding-usd mr-1"></i> DP / Cicil
-        </label>
+        @else
+            <span class="badge badge-success">
+                <i class="fas fa-check-circle mr-1"></i>Lunas
+            </span>
+        @endif
     </div>
 </div>
-
-{{-- Info DP (muncul kalau pilih DP) --}}
-<div id="infoDp" style="display:none">
-    <div class="form-group">
-        <label class="font-weight-bold">Jumlah DP</label>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Rp</span>
-            </div>
-            <input type="number" name="dp" id="inputDp"
-                   class="form-control" placeholder="0" min="0">
+{{-- Info Pembayaran --}}
+<div class="col-md-4 mt-3 mt-md-0">
+    <small class="text-muted d-block">Tipe Pembayaran</small>
+    @if($transaksi->hutang)
+        <span class="badge badge-warning">
+            <i class="fas fa-hand-holding-usd mr-1"></i>DP / Cicil
+        </span>
+        <div class="small text-muted mt-1">
+            Sisa hutang: <strong class="text-danger">Rp {{ number_format($transaksi->hutang->sisa_hutang, 0, ',', '.') }}</strong>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="font-weight-bold">Jatuh Tempo Pelunasan</label>
-        <input type="date" name="jatuh_tempo" class="form-control">
-    </div>
-    <div id="infoSisaHutang" class="alert alert-warning d-none">
-        <i class="fas fa-info-circle mr-2"></i>
-        Sisa hutang: <strong id="nilaiSisaHutang">Rp 0</strong>
-    </div>
+    @else
+        <span class="badge badge-success">
+            <i class="fas fa-check-circle mr-1"></i>Lunas
+        </span>
+    @endif
 </div>
-        </div>
-
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="thead-dark">
