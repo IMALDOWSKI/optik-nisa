@@ -125,10 +125,10 @@
                         <td><code>{{ $t->kode_transaksi }}</code></td>
                         <td>{{ $t->pelanggan->nama }}</td>
                         <td>
-                            @foreach($t->details as $d)
-                                <small>{{ $d->produk->nama_produk }} ({{ $d->jumlah }}x)</small><br>
-                            @endforeach
-                        </td>
+    @foreach($t->details as $d)
+        <small class="d-block">{{ $d->is_frame_sendiri ? 'Frame Milik Pelanggan' : ($d->produk->nama_produk ?? '-') }}</small>
+    @endforeach
+</td>
                         <td>Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
                         <td>
                             <span class="badge badge-info">
