@@ -3,6 +3,25 @@
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Edit Transaksi</h1>
+    @section('content')
+
+@if($transaksi->details->contains('is_frame_sendiri', true))
+<div class="alert alert-warning">
+    <i class="fas fa-exclamation-triangle mr-2"></i>
+    <strong>Transaksi ini mengandung item "Frame Bawa Sendiri".</strong>
+    Form edit ini belum mendukung jenis item tersebut — mengedit transaksi ini berisiko menghilangkan data frame sendiri.
+    Untuk perubahan kecil (status, catatan, metode bayar), silakan edit langsung lewat database atau hubungi developer.
+</div>
+@else
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Edit Transaksi</h1>
+    <a href="{{ route('transaksi.show', $transaksi) }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Kembali
+    </a>
+</div>
+
+<form action="{{ route('transaksi.update', $transaksi) }}" method="POST" id="formTransaksi"></form>
     <a href="{{ route('transaksi.show', $transaksi) }}" class="btn btn-secondary btn-sm">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
@@ -183,6 +202,12 @@
 
 </div>
 </form>
+
+@endif
+
+
+
+
 
 @push('scripts')
 <script>

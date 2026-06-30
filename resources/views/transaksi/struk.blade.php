@@ -131,15 +131,21 @@
         </table>
     </div>
 
-    @foreach($transaksi->details as $d)
-    <div class="produk-item">
-        <div class="nama">{{ $d->produk->nama_produk }}</div>
-        <div class="detail">
-            <span>{{ $d->jumlah }} x Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</span>
-            <span>Rp {{ number_format($d->subtotal, 0, ',', '.') }}</span>
-        </div>
+@foreach($transaksi->details as $d)
+<div class="produk-item">
+    <div class="nama">
+        @if($d->is_frame_sendiri)
+            Frame Milik Pelanggan{{ $d->keterangan_frame_sendiri ? ' ('.$d->keterangan_frame_sendiri.')' : '' }}
+        @else
+            {{ $d->produk->nama_produk ?? 'Produk tidak ditemukan' }}
+        @endif
     </div>
-    @endforeach
+    <div class="detail">
+        <span>{{ $d->jumlah }} x Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</span>
+        <span>Rp {{ number_format($d->subtotal, 0, ',', '.') }}</span>
+    </div>
+</div>
+@endforeach
 
     {{-- Total --}}
 <div class="total-section">
