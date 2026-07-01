@@ -198,8 +198,11 @@ class LaporanController extends Controller
 
             foreach ($transaksis as $i => $t) {
                 $produkList = $t->details->map(function ($d) {
-                    return $d->produk->nama_produk . ' (' . $d->jumlah . 'x)';
-                })->join(', ');
+    $nama = $d->is_frame_sendiri
+        ? 'Frame Milik Pelanggan' . ($d->keterangan_frame_sendiri ? ' ('.$d->keterangan_frame_sendiri.')' : '')
+        : ($d->produk->nama_produk ?? '-');
+    return $nama . ' (' . $d->jumlah . 'x)';
+})->join(', ');
 
                 fputcsv($file, [
                     $i + 1,
