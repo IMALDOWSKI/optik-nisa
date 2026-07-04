@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -38,7 +39,24 @@ class ProdukController extends Controller
         $data = $request->all();
         $data['kode_produk'] = Produk::generateKode($request->kategori);
 
-        Produk::create($data);
+        $produk = Produk::create($data);
+
+        ActivityLog::catat(
+            modul: 'produk',
+            aksi: 'create',
+            deskripsi: 'Produk ditambahkan',
+            model: $produk,
+            dataLama: null,
+            dataBaru: [
+                'kode_produk' => $produk->kode_produk,
+                'nama_produk' => $produk->nama_produk,
+                'kategori'    => $produk->kategori,
+                'stok'        => $produk->stok,
+                'harga'       => $produk->harga,
+                'barcode'     => $produk->barcode,
+            ]
+        );
+
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
@@ -68,18 +86,54 @@ class ProdukController extends Controller
 
     public function destroy(Produk $produk)
     {
+        // Activity Log
+        ActivityLog::catat(
+            modul: 'produk',
+            aksi: 'delete',
+            deskripsi: 'Produk dihapus',
+            model: $produk,
+            dataLama: [
+                'kode_produk' => $produk->kode_produk,
+                'nama_produk' => $produk->nama_produk,
+                'kategori'    => $produk->kategori,
+            ],
+            dataBaru: null
+        );
+
         $produk->delete();
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }
 
-public function cetakBarcode(Produk $produk)
-{
-    
-    return view('produk.barcode', compact('produk'));
-}
+
+    public function cetakBarcode(Produk $produk)
+    {
+        // Activity Log
+        ActivityLog::catat(
+            modul: 'produk',
+            aksi: 'print',
+            deskripsi: 'Cetak barcode produk',
+            model: $produk,
+            dataLama: null,
+            dataBaru: [
+                'kode_produk' => $produk->kode_produk,
+            ]
+        );
+
+        return view('produk.barcode', compact('produk'));
+    }
 
     public function cetakBarcodeMassal(Request $request)
     {
+        // Activity Log
+        ActivityLog::catat(
+            modul: 'produk',
+            aksi: 'print',
+            deskripsi: 'Cetak barcode massal',
+            model: null,
+            dataLama: null,
+            dataBaru: null
+        );
+
         $produks = Produk::where('status', 'aktif')->get();
         return view('produk.barcode_massal', compact('produks'));
     }
