@@ -1,7 +1,7 @@
 {
-    "name": "Optik Nisa - Sistem Manajemen Optik",
-    "short_name": "Optik Nisa",
-    "description": "Sistem manajemen toko optik - transaksi, stok, pelanggan, dan laporan",
+    "name": "OptiCore - Sistem Manajemen Optik",
+    "short_name": "OptiCore",
+    "description": "Sistem manajemen toko optik by IMALDOWSKI",
     "start_url": "/dashboard",
     "display": "standalone",
     "background_color": "#1a3a5c",

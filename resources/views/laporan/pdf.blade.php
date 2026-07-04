@@ -30,7 +30,7 @@
 </head>
 <body>
 
-    <h1>OPTIK NISA — Laporan Transaksi</h1>
+    <h1>OptiCore — Laporan Transaksi</h1>
     <div class="subtitle">
         Periode: {{ $daftarBulan[$bulan] }} {{ $tahun }} &nbsp;|&nbsp;
         Dicetak: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
@@ -114,7 +114,7 @@
     </table>
 
     <div class="footer">
-        Sistem Manajemen Optik Nisa &copy; {{ date('Y') }}
+        OptiCore by IMALDOWSKI &copy; {{ date('Y') }}
     </div>
 
 </body>

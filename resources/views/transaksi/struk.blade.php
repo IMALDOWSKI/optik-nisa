@@ -94,9 +94,9 @@
 
     {{-- Header --}}
     <div class="header">
-        <h2>OPTIK NISA</h2>
-        <p>Sistem Manajemen Optik</p>
-        <p>Telp: (0651) xxx-xxxx</p>
+        <h2>OptiCore</h2>
+        <p>Powered by IMALDOWSKI</p>
+        <p>Telp: 0821-7973-6657</p>
     </div>
 
     {{-- Info Transaksi --}}

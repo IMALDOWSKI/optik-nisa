@@ -314,7 +314,7 @@
         <div class="deco-circle deco-circle-3"></div>
 
         <div class="content">
-            <div class="brand-logo">👓</div>
+            <div class="brand-logo"> </div>
             <div class="brand-name">Optik Nisa</div>
             <div class="brand-tagline">Sistem Manajemen Optik</div>
 
@@ -356,8 +356,8 @@
     {{-- RIGHT PANEL --}}
     <div class="right-panel">
         <div class="login-header">
-            <h2>Selamat Datang 👋</h2>
-            <p>Masuk ke sistem manajemen Optik Nisa</p>
+            <h2>Selamat Datang </h2>
+            <p>Masuk ke sistem manajemen Optik</p>
         </div>
 
         {{-- Error Messages --}}
@@ -410,7 +410,7 @@
         </div>
 
         <div class="copyright">
-            &copy; {{ date('Y') }} Optik Nisa — Sistem Manajemen Optik
+            &copy; {{ date('Y') }} OptiCore — by IMALDOWSKI
         </div>
     </div>
 

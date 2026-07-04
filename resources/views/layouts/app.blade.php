@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Optik Nisa</title>
+    <title>OptiCore</title>
 
 {{-- PWA Manifest --}}
 <link rel="manifest" href="{{ asset('manifest.json') }}">
@@ -899,7 +899,7 @@
                 <div class="copyright text-center my-auto">
                     <span class="text-muted">
                         Optik Nisa &copy; {{ date('Y') }} —
-                        Sistem Manajemen Optik
+                        by IMALDOWSKI
                     </span>
                 </div>
             </div>
