@@ -12,6 +12,7 @@ class NotifikasiController extends Controller
         // Generate notifikasi terbaru
         Notifikasi::cekStokMenipis();
         Notifikasi::cekPelangganTidakAktif();
+        Notifikasi::cekReminderKontrolMata();
 
         $notifikasis = Notifikasi::latest()->paginate(15);
         $belumDibaca = Notifikasi::where('sudah_dibaca', false)->count();
