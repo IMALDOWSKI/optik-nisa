@@ -616,7 +616,7 @@
 <li class="nav-item {{ Request::is('antrian*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('antrian.index') }}">
         <i class="fas fa-fw fa-ticket-alt"></i>
-        <span>Antrian Digital</span>
+        <span>{{ __('menu.antrian') }}</span>
     </a>
 </li>
 
@@ -684,42 +684,42 @@
 <li class="nav-item {{ Request::is('backup*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('backup.index') }}">
         <i class="fas fa-fw fa-database"></i>
-        <span>Backup Database</span>
+            <span>{{ __('menu.backup_database') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('laba-rugi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laba-rugi.index') }}">
         <i class="fas fa-fw fa-chart-line"></i>
-        <span>Laba Rugi</span>
+        <span>{{ __('menu.laba_rugi') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('laporan') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laporan.index') }}">
         <i class="fas fa-fw fa-list-alt"></i>
-        <span>Laporan Transaksi</span>
+        <span>{{ __('menu.laporan_transaksi') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('laporan/kategori*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laporan.kategori') }}">
         <i class="fas fa-fw fa-tags"></i>
-        <span>Laporan Kategori</span>
+        <span>{{ __('menu.laporan_kategori') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('laporan/kasir*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laporan.kasir') }}">
         <i class="fas fa-fw fa-user-tie"></i>
-        <span>Laporan Kasir</span>
+        <span>{{ __('menu.laporan_kasir') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('laporan/keuangan*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('laporan.keuangan') }}">
         <i class="fas fa-fw fa-money-bill-wave"></i>
-        <span>Laporan Keuangan</span>
+        <span>{{ __('menu.laporan_keuangan') }}</span>
     </a>
 </li>
 
@@ -729,7 +729,7 @@
 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('user.index') }}">
         <i class="fas fa-fw fa-user-cog"></i>
-        <span>Manajemen User</span>
+        <span>{{ __('menu.manajemen_user') }}</span>
     </a>
 </li>
 @endif
@@ -860,7 +860,7 @@
             @csrf
             <button type="submit" class="dropdown-item text-danger">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
-                Logout
+                {{ __('menu.logout') }}
             </button>
         </form>
     </div>
