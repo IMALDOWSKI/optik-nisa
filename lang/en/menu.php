@@ -2,7 +2,7 @@
 
 return [
     'dashboard'       => 'Dashboard',
-    'data_master'     => 'Master Data',
+    'data_master'     => 'Data Master',
     'pengeluaran'     => 'Expenses',
     'pelanggan'       => 'Customers',
     'member'          => 'Member Card',
@@ -18,6 +18,8 @@ return [
     'resep'           => 'Eye Prescription',
     'reminder'        => 'Eye Check Reminder',
     'notifikasi'      => 'Notifications',
+    'notifikasi_tidak_ada' => 'No new notifications',
+    'notifikasi_lihat_semua' => 'See All Notifications',
     'laporan'         => 'Reports',
     'laporan_transaksi' => 'Transaction Report',
     'laporan_kategori'  => 'Category Report',
@@ -25,10 +27,10 @@ return [
     'laporan_keuangan'  => 'Financial Report',
     'laba_rugi'       => 'Profit & Loss',
     'pengaturan'      => 'Settings',
+    'pengaturan_toko' => 'Store Settings',
     'manajemen_user'  => 'User Management',
     'activity_log'    => 'Activity Log',
     'backup_database' => 'Database Backup',
-    'pengaturan_toko' => 'Store Settings',
     'profile'         => 'My Profile',
     'logout'          => 'Logout',
 
@@ -38,3 +40,4 @@ return [
     'total_pelanggan'     => 'Total Customers',
     'total_produk'        => 'Total Products',
 ];
+

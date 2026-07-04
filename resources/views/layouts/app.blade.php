@@ -546,12 +546,12 @@
         </li>
 
         <hr class="sidebar-divider">
-        <div class="sidebar-heading">Data Master</div>
+        <div class="sidebar-heading">{{ __('menu.data_master') }}</div>
 
         <li class="nav-item {{ Request::is('pengeluaran*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('pengeluaran.index') }}">
         <i class="fas fa-fw fa-money-bill-wave"></i>
-        <span>Pengeluaran</span>
+<span>{{ __('menu.pengeluaran') }}</span>
     </a>
 </li>
 
@@ -565,7 +565,7 @@
         <li class="nav-item {{ Request::is('member*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('member.index') }}">
         <i class="fas fa-fw fa-id-card"></i>
-        <span>Kartu Member</span>
+        <span>{{ __('menu.member') }}</span>
     </a>
 </li>
 
@@ -578,14 +578,14 @@
         <li class="nav-item {{ Request::is('restok*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('restok.index') }}">
         <i class="fas fa-fw fa-boxes"></i>
-        <span>Restok Produk</span>
+        <span>{{ __('menu.restok') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('supplier.index') }}">
         <i class="fas fa-fw fa-truck"></i>
-        <span>Supplier</span>
+        <span>{{ __('menu.supplier') }}</span>
     </a>
 </li>
 
@@ -599,7 +599,7 @@
         <li class="nav-item {{ Request::is('pesanan*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('pesanan.index') }}">
         <i class="fas fa-fw fa-box"></i>
-        <span>Status Pesanan</span>
+        <span>{{ __('menu.pesanan') }}</span>
         @php $pesananCount = \App\Models\Pesanan::whereIn('status', ['menunggu','diproses','siap_diambil'])->count(); @endphp
         @if($pesananCount > 0)
             <span class="badge badge-warning ml-1">{{ $pesananCount }}</span>
@@ -609,7 +609,7 @@
 <li class="nav-item {{ Request::is('jadwal*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('jadwal.index') }}">
         <i class="fas fa-fw fa-calendar-alt"></i>
-        <span>Jadwal & Booking</span>
+        <span>{{ __('menu.jadwal') }}</span>
     </a>
 </li>
 
@@ -623,7 +623,7 @@
         <li class="nav-item {{ Request::is('hutang*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('hutang.index') }}">
         <i class="fas fa-fw fa-file-invoice-dollar"></i>
-        <span>Hutang Pelanggan</span>
+        <span>{{ __('menu.hutang') }}</span>
         @php $hutangCount = \App\Models\Hutang::where('status', 'belum_lunas')->count(); @endphp
         @if($hutangCount > 0)
             <span class="badge badge-danger ml-1">{{ $hutangCount }}</span>
@@ -634,21 +634,21 @@
         <li class="nav-item {{ Request::is('garansi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('garansi.index') }}">
         <i class="fas fa-fw fa-shield-alt"></i>
-        <span>Garansi</span>
+        <span>{{ __('menu.garansi') }}</span>
     </a>
 </li>
 
         <li class="nav-item {{ Request::is('resep*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('resep.index') }}">
                 <i class="fas fa-fw fa-eye"></i>
-                <span>Resep Mata</span>
+                <span>{{ __('menu.resep') }}</span>
             </a>
         </li>
 
         <li class="nav-item {{ Request::is('notifikasi*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('notifikasi.index') }}">
         <i class="fas fa-fw fa-bell"></i>
-        <span>Notifikasi</span>
+        <span>{{ __('menu.notifikasi') }}</span>
         @php $notifCount = \App\Models\Notifikasi::where('sudah_dibaca', false)->count(); @endphp
         @if($notifCount > 0)
             <span class="badge badge-danger ml-1">{{ $notifCount }}</span>
@@ -659,25 +659,25 @@
 <li class="nav-item {{ Request::is('activity-log*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('activity-log.index') }}">
         <i class="fas fa-fw fa-history"></i>
-        <span>Activity Log</span>
+        <span>{{ __('menu.activity_log') }}</span>
     </a>
 </li>
 
 <li class="nav-item {{ Request::is('reminder*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('reminder.index') }}">
         <i class="fas fa-fw fa-eye"></i>
-        <span>Reminder Kontrol Mata</span>
+        <span>{{ __('menu.reminder') }}</span>
     </a>
 </li>
 
 @if(auth()->user()->role == 'admin')
 <hr class="sidebar-divider">
-<div class="sidebar-heading">Laporan</div>
+<div class="sidebar-heading">{{ __('menu.laporan') }}</div>
 
 <li class="nav-item {{ Request::is('pengaturan*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('pengaturan.index') }}">
         <i class="fas fa-fw fa-cog"></i>
-        <span>Pengaturan Toko</span>
+        <span>{{ __('menu.pengaturan_toko') }}</span>
     </a>
 </li>
 
@@ -724,7 +724,7 @@
 </li>
 
 <hr class="sidebar-divider">
-<div class="sidebar-heading">Pengaturan</div>
+<div class="sidebar-heading">{{ __('menu.pengaturan') }}</div>
 
 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('user.index') }}">
@@ -820,12 +820,12 @@
         @empty
             <div class="dropdown-item text-center text-muted py-3">
                 <i class="fas fa-bell-slash mr-1"></i>
-                Tidak ada notifikasi baru
+                {{ __('menu.notifikasi_tidak_ada') }}
             </div>
         @endforelse
         <a class="dropdown-item text-center small text-gray-500"
-           href="{{ route('notifikasi.index') }}">
-            Lihat Semua Notifikasi
+            href="{{ route('notifikasi.index') }}">
+            {{ __('menu.notifikasi_lihat_semua') }}
         </a>
     </div>
 </li>
@@ -851,9 +851,9 @@
             <small class="text-muted">{{ auth()->user()->email }}</small>
         </div>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('profile.index') }}">
+            <a class="dropdown-item" href="{{ route('profile.index') }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
-            Profile Saya
+            {{ __('menu.profile') }}
         </a>
         <div class="dropdown-divider"></div>
         <form method="POST" action="{{ route('logout') }}">
