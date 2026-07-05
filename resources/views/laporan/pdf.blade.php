@@ -30,7 +30,7 @@
 </head>
 <body>
 
-    <h1>OptiCore — Laporan Transaksi</h1>
+    <h1>{{ __('menu.laporan_transaksi') }}</h1>
     <div class="subtitle">
         Periode: {{ $daftarBulan[$bulan] }} {{ $tahun }} &nbsp;|&nbsp;
         Dicetak: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
@@ -38,15 +38,15 @@
 
     <div class="ringkasan">
         <div class="ringkasan-item">
-            <div class="label">Total Transaksi</div>
+<div class="label">{{ __('menu.total_transaksi') }}</div>
             <div class="value">{{ $transaksis->count() }}</div>
         </div>
         <div class="ringkasan-item">
-            <div class="label">Transaksi Selesai</div>
+        <div class="label">{{ __('menu.transaksi_selesai') }}</div>
             <div class="value">{{ $transaksis->where('status', 'selesai')->count() }}</div>
         </div>
         <div class="ringkasan-item">
-            <div class="label">Total Pendapatan</div>
+        <div class="label">{{ __('menu.total_pendapatan') ?? 'Total Pendapatan' }}</div>
             <div class="value">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
         </div>
     </div>

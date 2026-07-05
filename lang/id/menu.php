@@ -50,6 +50,10 @@ return [
     'export_pdf'             => 'Export PDF',
     'export_excel'           => 'Export Excel (CSV)',
     'print_browser'         => 'Print dari Browser',
+    'total_transaksi'        => 'Total Transaksi',
+    'transaksi_selesai'      => 'Transaksi Selesai',
+    'total_pendapatan'       => 'Total Pendapatan',
+
 
     'bulan'                  => 'Bulan',
     'tahun'                  => 'Tahun',
