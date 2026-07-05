@@ -27,8 +27,10 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Transaksi Hari Ini
+                            {{ __('menu.transaksi_hari_ini') }}
                         </div>
+
+
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $transaksiHariIni }} Transaksi
                         </div>
@@ -67,7 +69,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Transaksi Bulan Ini
+                            {{ __('menu.transaksi_bulan_ini') }}
+
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $transaksBulanIni }} Transaksi
@@ -133,7 +136,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Total Pendapatan
+                            {{ __('menu.total_pendapatan') }}
+
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
@@ -153,7 +157,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                            Total Diskon Diberikan
+                            {{ __('menu.total_diskon_diberikan') }}
+
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             Rp {{ number_format($totalDiskon, 0, ',', '.') }}
@@ -171,9 +176,9 @@
         <div class="card stat-card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                        <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Garansi Hampir Expired
+                            {{ __('menu.garansi_hampir_expired') }}
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $garansiHampirExpired->count() }} Garansi
@@ -336,7 +341,7 @@
                             <tr>
                                 <td colspan="4" class="text-center py-4">
                                     <i class="fas fa-receipt fa-2x text-gray-300 d-block mb-2"></i>
-                                    <span class="text-muted">Belum ada transaksi</span>
+                                    <span class="text-muted">{{ __('menu.belum_ada_transaksi') }}</span>
                                 </td>
                             </tr>
                             @endforelse

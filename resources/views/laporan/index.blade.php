@@ -4,19 +4,20 @@
 
 {{-- Judul & Tombol Export --}}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Laporan Transaksi</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{ __('menu.laporan_transaksi') }}</h1>
     <div>
-<a href="{{ route('laporan.pdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
-   class="btn btn-danger btn-sm shadow-sm mr-2" target="_blank">
-    <i class="fas fa-file-pdf"></i> Export PDF
-</a>
+        <a href="{{ route('laporan.pdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+           class="btn btn-danger btn-sm shadow-sm mr-2" target="_blank">
+
+        <i class="fas fa-file-pdf"></i> {{ __('menu.export_pdf') }}
+    </a>
 <a href="{{ route('laporan.csv', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
    class="btn btn-success btn-sm shadow-sm" target="_blank">
-    <i class="fas fa-file-excel"></i> Export Excel (CSV)
+    <i class="fas fa-file-excel"></i> {{ __('menu.export_excel') }}
 </a>
         <a href="{{ route('laporan.print', ['bulan' => $bulan, 'tahun' => $tahun, 'status' => $status]) }}"
    target="_blank" class="btn btn-secondary btn-sm">
-    <i class="fas fa-print mr-1"></i>Print dari Browser
+    <i class="fas fa-print mr-1"></i>{{ __('menu.print_browser') }}
 </a>
     </div>
 </div>
@@ -26,7 +27,7 @@
     <div class="card-body">
         <form method="GET" action="{{ route('laporan.index') }}" class="form-inline">
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Bulan:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.bulan') }}:</label>
                 <select name="bulan" class="form-control">
                     @foreach($daftarBulan as $num => $nama)
                         <option value="{{ $num }}" {{ $bulan == $num ? 'selected' : '' }}>
@@ -36,7 +37,7 @@
                 </select>
             </div>
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Tahun:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.tahun') }}:</label>
                 <select name="tahun" class="form-control">
                     @for($y = date('Y'); $y >= date('Y') - 3; $y--)
                         <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>
@@ -46,16 +47,17 @@
                 </select>
             </div>
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Status:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.status') }}:</label>
                 <select name="status" class="form-control">
-                    <option value="">Semua</option>
-                    <option value="selesai"    {{ $status == 'selesai'    ? 'selected' : '' }}>Selesai</option>
-                    <option value="pending"    {{ $status == 'pending'    ? 'selected' : '' }}>Pending</option>
-                    <option value="dibatalkan" {{ $status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                    <option value="">{{ __('menu.semua') }}</option>
+                    <option value="selesai"    {{ $status == 'selesai'    ? 'selected' : '' }}>{{ __('menu.selesai') }}</option>
+                    <option value="pending"    {{ $status == 'pending'    ? 'selected' : '' }}>{{ __('menu.pending') }}</option>
+                    <option value="dibatalkan" {{ $status == 'dibatalkan' ? 'selected' : '' }}>{{ __('menu.dibatalkan') }}</option>
+
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i> Filter
+                <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> {{ __('menu.filter') }}
             </button>
         </form>
     </div>
@@ -67,20 +69,21 @@
         <div class="card border-left-primary shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    Total Transaksi
+                    {{ __('menu.total_transaksi') }}
                 </div>
                 <div class="h5 font-weight-bold text-gray-800">
-                    {{ $transaksis->count() }} Transaksi
+                    {{ $transaksis->count() }} {{ __('menu.transaksi') }}
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+<div class="col-md-4">
         <div class="card border-left-success shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                    Total Pendapatan
+                    {{ __('menu.total_pendapatan') }}
                 </div>
+
                 <div class="h5 font-weight-bold text-gray-800">
                     Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
                 </div>
@@ -91,8 +94,9 @@
         <div class="card border-left-info shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                    Periode
+                    {{ __('menu.periode') }}
                 </div>
+
                 <div class="h5 font-weight-bold text-gray-800">
                     {{ $daftarBulan[$bulan] }} {{ $tahun }}
                 </div>
@@ -146,7 +150,7 @@
                     <tr>
                         <td colspan="8" class="text-center text-muted py-4">
                             <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                            Tidak ada transaksi pada periode ini
+                            {{ __('menu.empty_laporan_transaksi') }}
                         </td>
                     </tr>
                     @endforelse
@@ -154,7 +158,7 @@
                 @if($transaksis->count() > 0)
                 <tfoot>
                     <tr class="bg-light font-weight-bold">
-                        <td colspan="4" class="text-right">Total Pendapatan:</td>
+                        <td colspan="4" class="text-right">{{ __('menu.total_pendapatan') }}:</td>
                         <td>Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
                         <td colspan="3"></td>
                     </tr>
