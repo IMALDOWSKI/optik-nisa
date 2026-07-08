@@ -141,53 +141,59 @@
 <body>
 
 <div class="toolbar">
-    <h5>🖨️ Preview Cetak Laporan Transaksi</h5>
-    <button class="btn btn-success" onclick="window.print()">
-        🖨️ Print Sekarang
+<h5>{{ __('menu.preview_cetak_laporan_transaksi') }}</h5>
+        <button class="btn btn-success" onclick="window.print()">
+        {{ __('menu.print_sekarang') }}
     </button>
     <a href="{{ route('laporan.index', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-secondary">
-        ← Kembali
+        {{ __('menu.kembali') }}
     </a>
 </div>
+
 
 <div class="laporan-container">
 
     <div class="kop">
-        <h2>👓 OPTIK NISA</h2>
-        <p>Laporan Transaksi Penjualan</p>
+        <h2>OPTIK NISA</h2>
+
+        <p>{{ __('menu.laporan_transaksi_penjualan') }}</p>
+
     </div>
 
     <div class="periode">
         <h4>Periode: {{ $daftarBulan[$bulan] }} {{ $tahun }}</h4>
     </div>
 
-    <div class="ringkasan">
+            <div class="ringkasan">
         <div class="ringkasan-item">
-            <div class="label">Total Transaksi</div>
+            <div class="label">{{ __('menu.total_transaksi') }}</div>
             <div class="value">{{ $transaksis->count() }}</div>
         </div>
+
         <div class="ringkasan-item">
-            <div class="label">Total Pendapatan</div>
+            <div class="label">{{ __('menu.total_pendapatan') }}</div>
             <div class="value">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
         </div>
         <div class="ringkasan-item">
-            <div class="label">Total Diskon</div>
+            <div class="label">{{ __('menu.total_diskon_diberikan') }}</div>
             <div class="value">Rp {{ number_format($totalDiskon, 0, ',', '.') }}</div>
         </div>
     </div>
 
+
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Kode Transaksi</th>
-                <th>Pelanggan</th>
-                <th>Tanggal</th>
-                <th>Metode Bayar</th>
-                <th class="text-right">Total</th>
-                <th class="text-right">Diskon</th>
-                <th class="text-right">Grand Total</th>
-                <th class="text-center">Status</th>
+                <th>{{ __('menu.no') }}</th>
+                <th>{{ __('menu.kode_transaksi') }}</th>
+                <th>{{ __('menu.pelanggan') }}</th>
+                <th>{{ __('menu.tanggal') }}</th>
+                <th>{{ __('menu.metode_bayar') }}</th>
+                <th class="text-right">{{ __('menu.total') }}</th>
+                <th class="text-right">{{ __('menu.diskon') }}</th>
+                <th class="text-right">{{ __('menu.grand_total') }}</th>
+                <th class="text-center">{{ __('menu.status') }}</th>
+
             </tr>
         </thead>
         <tbody>
@@ -210,9 +216,10 @@
             @empty
             <tr>
                 <td colspan="9" class="text-center" style="padding: 30px; color: #999;">
-                    Tidak ada data transaksi pada periode ini
+                    {{ __('menu.no_transaksi') }}
                 </td>
             </tr>
+
             @endforelse
         </tbody>
         @if($transaksis->count() > 0)

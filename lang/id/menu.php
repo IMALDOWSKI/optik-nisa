@@ -85,4 +85,27 @@ return [
     'belum_ada_transaksi'     => 'Belum ada transaksi',
     'no_transaksi'            => 'Tidak ada transaksi pada periode ini',
     'total_pendapatan_label' => 'Total Pendapatan',
+
+'preview_cetak_laporan_transaksi' => 'Preview Cetak Laporan Transaksi',
+
+    'laporan_transaksi_penjualan' => 'Laporan Transaksi Penjualan',
+    'total_transaksi' => 'Total Transaksi',
+    'no_transaksi' => 'Tidak ada transaksi pada periode ini',
+
+    'print_sekarang' => 'Print Sekarang',
+    'kembali' => 'Kembali',
+    'optik_nisa' => 'OPTIK NISA',
+    'preview_cetak_laporan_transaksi' => 'Preview Cetak Laporan Transaksi',
+    'laporan_transaksi_penjualan' => 'Laporan Transaksi Penjualan',
+    'total_transaksi' => 'Total Transaksi',
+    'total_pendapatan' => 'Total Pendapatan',
+    'total_diskon_diberikan' => 'Total Diskon Diberikan',
+    'print_sekarang' => 'Print Sekarang',
+    'kembali' => 'Kembali',
+    'no_transaksi' => 'Tidak ada transaksi pada periode ini',
+    'dicetak_oleh' => 'Dicetak oleh',
+    'tanggal_cetak' => 'Tanggal cetak',
+    'total' => 'TOTAL',
+
+
 ];

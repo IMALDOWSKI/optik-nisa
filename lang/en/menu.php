@@ -43,9 +43,10 @@ return [
     'transaksi_hari_ini'       => "Today's Transactions",
     'transaksi_bulan_ini'      => "This Month's Transactions",
     'total_pendapatan'         => 'Total Revenue',
-'total_diskon_diberikan'  => 'Total Discounts Given',
+    'total_diskon_diberikan' => 'Total Discounts Given',
     'garansi_hampir_expired'   => 'Warranty Expiring Soon',
     'belum_ada_transaksi'      => 'No transactions yet',
+
 
     // Laporan Transaksi (i18n)
     'laporan_transaksi'       => 'Transaction Report',
@@ -73,7 +74,11 @@ return [
     'empty_laporan_transaksi' => 'No transactions in this period',
     'periode'                 => 'Period',
     'total_pendapatan'        => 'Total Revenue',
-    'status_pesanan'         => 'Status',
+    'total_diskon_diberikan' => 'Total Discounts Given',
+    'total_transaksi'         => 'Total Transactions',
+    'no_transaksi'            => 'No transactions in this period',
+    'laporan_transaksi_penjualan' => 'Transaction Sales Report',
+
     'no'                      => 'No',
     'kode'                    => 'Code',
     'pelanggan'               => 'Customer',
@@ -82,6 +87,7 @@ return [
     'frame_milik_pelanggan'  => 'Customer Frame',
     'belum_ada_transaksi'     => 'No transactions yet',
     'no_transaksi'           => 'No transactions in this period',
-    'total_pendapatan_label' => 'Total Revenue',
+'total_pendapatan_label' => 'Total Revenue',
+    'preview_cetak_laporan_transaksi' => 'Print Report Preview',
 ];
 
