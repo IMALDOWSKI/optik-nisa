@@ -13,8 +13,11 @@
     </a>
 <a href="{{ route('laporan.csv', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
    class="btn btn-success btn-sm shadow-sm" target="_blank">
-    <i class="fas fa-file-excel"></i> {{ __('menu.export_excel') }}
+<i class="fas fa-file-csv"></i> {{ __('menu.export_csv') }}
 </a>
+
+        
+
         <a href="{{ route('laporan.print', ['bulan' => $bulan, 'tahun' => $tahun, 'status' => $status]) }}"
    target="_blank" class="btn btn-secondary btn-sm">
     <i class="fas fa-print mr-1"></i>{{ __('menu.print_browser') }}
