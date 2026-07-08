@@ -115,14 +115,14 @@
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th>No</th>
-                        <th>Kode</th>
-                        <th>Pelanggan</th>
-                        <th>Produk</th>
-                        <th>Total</th>
-                        <th>Metode</th>
-                        <th>Tanggal</th>
-                        <th>Status</th>
+                        <th>{{ __('menu.no') }}</th>
+                        <th>{{ __('menu.kode') }}</th>
+                        <th>{{ __('menu.pelanggan') }}</th>
+                        <th>{{ __('menu.produk') }}</th>
+                        <th>{{ __('menu.total') }}</th>
+                        <th>{{ __('menu.metode') }}</th>
+                        <th>{{ __('menu.tanggal') }}</th>
+                        <th>{{ __('menu.status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,7 +133,7 @@
                         <td>{{ $t->pelanggan->nama }}</td>
                         <td>
     @foreach($t->details as $d)
-        <small class="d-block">{{ $d->is_frame_sendiri ? 'Frame Milik Pelanggan' : ($d->produk->nama_produk ?? '-') }}</small>
+        <small class="d-block">{{ $d->is_frame_sendiri ? __('menu.frame_milik_pelanggan') : ($d->produk->nama_produk ?? '-') }}</small>
     @endforeach
 </td>
                         <td>Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
