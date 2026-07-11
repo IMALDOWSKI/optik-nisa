@@ -32,8 +32,8 @@
 
     <h1>{{ __('menu.laporan_transaksi') }}</h1>
     <div class="subtitle">
-        Periode: {{ $daftarBulan[$bulan] }} {{ $tahun }} &nbsp;|&nbsp;
-        Dicetak: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
+        {{ __('menu.periode') }}: {{ $daftarBulan[$bulan] }} {{ $tahun }} &nbsp;|&nbsp;
+        {{ __('menu.dicetak') }}: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
     </div>
 
     <div class="ringkasan">
@@ -54,7 +54,7 @@
     <table>
         <thead>
             <tr>
-                <th width="25">No</th>
+                <th width="25">{{ __('menu.no') }}</th>
                 <th width="120">Kode Transaksi</th>
                 <th width="100">Pelanggan</th>
                 <th>Produk</th>
