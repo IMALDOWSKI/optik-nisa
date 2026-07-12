@@ -40,6 +40,17 @@ return [
     'total_pelanggan'     => 'Total Customers',
     'total_produk'        => 'Total Products',
 
+    'laporan_keuangan_tahunan' => 'Annual Financial Report',
+    'tampilkan'                => 'Show',
+    'total_diskon'             => 'Total Discounts',
+    'total_pendapatan'        => 'Total Revenue',
+
+    'grafik_pendapatan_per_bulan' => 'Revenue Chart per Month',
+    'detail_per_bulan'            => 'Detail per Month',
+    'pendapatan'                  => 'Revenue',
+    'bulan'                        => 'Month',
+    'transaksi'                    => 'Transactions',
+
     'transaksi_hari_ini'       => "Today's Transactions",
     'transaksi_bulan_ini'      => "This Month's Transactions",
     'total_pendapatan'         => 'Total Revenue',

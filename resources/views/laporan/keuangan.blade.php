@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">
-        <i class="fas fa-money-bill-wave mr-2"></i>Laporan Keuangan Tahunan
+        <h1 class="h3 mb-0 text-gray-800">
+        <i class="fas fa-money-bill-wave mr-2"></i>{{ __('menu.laporan_keuangan_tahunan') }}
     </h1>
 </div>
 
@@ -12,7 +12,7 @@
     <div class="card-body">
         <form method="GET" action="{{ route('laporan.keuangan') }}" class="form-inline">
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Tahun:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.tahun') }}:</label>
                 <select name="tahun" class="form-control">
                     @for($y = date('Y'); $y >= date('Y') - 3; $y--)
                         <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>
@@ -22,7 +22,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i> Tampilkan
+                <i class="fas fa-search"></i> {{ __('menu.tampilkan') }}
             </button>
         </form>
     </div>
@@ -34,7 +34,7 @@
         <div class="card border-left-success shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                    Total Pendapatan {{ $tahun }}
+                    {{ __('menu.total_pendapatan') }} {{ $tahun }}
                 </div>
                 <div class="h5 font-weight-bold text-gray-800">
                     Rp {{ number_format($totalTahunIni, 0, ',', '.') }}
@@ -46,7 +46,7 @@
         <div class="card border-left-danger shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                    Total Diskon {{ $tahun }}
+                    {{ __('menu.total_diskon') }} {{ $tahun }}
                 </div>
                 <div class="h5 font-weight-bold text-gray-800">
                     Rp {{ number_format($totalDiskon, 0, ',', '.') }}
@@ -58,7 +58,7 @@
         <div class="card border-left-info shadow py-2">
             <div class="card-body">
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                    Total Transaksi {{ $tahun }}
+                    {{ __('menu.total_transaksi') }} {{ $tahun }}
                 </div>
                 <div class="h5 font-weight-bold text-gray-800">
                     {{ $totalTransaksi }} Transaksi
@@ -73,8 +73,8 @@
     <div class="col-md-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                    Grafik Pendapatan per Bulan {{ $tahun }}
+                    <h6 class="m-0 font-weight-bold text-primary">
+                    {{ __('menu.grafik_pendapatan_per_bulan') }} {{ $tahun }}
                 </h6>
             </div>
             <div class="card-body">
@@ -87,7 +87,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    Detail per Bulan
+                    {{ __('menu.detail_per_bulan') }}
                 </h6>
             </div>
             <div class="card-body p-0">

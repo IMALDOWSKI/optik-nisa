@@ -55,6 +55,17 @@ return [
     'total_pelanggan'     => 'Total Pelanggan',
     'total_produk'        => 'Total Produk',
 
+    'laporan_keuangan_tahunan' => 'Laporan Keuangan Tahunan',
+    'tampilkan'                => 'Tampilkan',
+    'total_diskon'             => 'Total Diskon',
+    'total_pendapatan'        => 'Total Pendapatan',
+
+    'grafik_pendapatan_per_bulan' => 'Grafik Pendapatan per Bulan',
+    'detail_per_bulan'            => 'Detail per Bulan',
+    'pendapatan'                  => 'Pendapatan',
+    'bulan'                        => 'Bulan',
+    'transaksi'                    => 'Transaksi',
+
     'transaksi_hari_ini'       => 'Transaksi Hari Ini',
     'transaksi_bulan_ini'      => 'Transaksi Bulan Ini',
     'total_pendapatan'         => 'Total Pendapatan',
