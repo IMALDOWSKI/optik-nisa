@@ -12,7 +12,8 @@
     <div class="card-body">
         <form method="GET" action="{{ route('laporan.kategori') }}" class="form-inline">
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Bulan:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.bulan') }}:</label>
+
                 <select name="bulan" class="form-control">
                     @foreach($daftarBulan as $num => $nama)
                         <option value="{{ $num }}" {{ $bulan == $num ? 'selected' : '' }}>
@@ -22,7 +23,8 @@
                 </select>
             </div>
             <div class="form-group mr-3">
-                <label class="mr-2 font-weight-bold">Tahun:</label>
+                <label class="mr-2 font-weight-bold">{{ __('menu.tahun') }}:</label>
+
                 <select name="tahun" class="form-control">
                     @for($y = date('Y'); $y >= date('Y') - 3; $y--)
                         <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>
