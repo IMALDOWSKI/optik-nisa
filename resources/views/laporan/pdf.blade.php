@@ -122,9 +122,10 @@
     </table>
 
     <div class="footer">
-        {{ __('menu.optik_nisa') }}
 
+        {{ __('menu.optik_nisa') }} &copy; {{ date('Y') }}
     </div>
+
 
 </body>
 </html>
