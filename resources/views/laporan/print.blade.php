@@ -161,7 +161,8 @@
     </div>
 
     <div class="periode">
-        <h4>Periode: {{ $daftarBulan[$bulan] }} {{ $tahun }}</h4>
+        <h4>{{ __('menu.periode') }}: {{ $daftarBulan[$bulan] }} {{ $tahun }}</h4>
+
     </div>
 
             <div class="ringkasan">
@@ -209,9 +210,16 @@
                 <td class="text-right"><strong>Rp {{ number_format($t->grand_total, 0, ',', '.') }}</strong></td>
                 <td class="text-center">
                     <span class="badge badge-{{ $t->status == 'selesai' ? 'selesai' : ($t->status == 'pending' ? 'pending' : 'batal') }}">
-                        {{ ucfirst($t->status) }}
+                        @if($t->status == 'selesai')
+                            {{ __('menu.selesai') }}
+                        @elseif($t->status == 'pending')
+                            {{ __('menu.pending') }}
+                        @else
+                            {{ __('menu.dibatalkan') }}
+                        @endif
                     </span>
                 </td>
+
             </tr>
             @empty
             <tr>
@@ -235,10 +243,11 @@
         @endif
     </table>
 
-    <div class="footer-print">
-        <span>Dicetak oleh: {{ auth()->user()->name }}</span>
-        <span>Tanggal cetak: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</span>
+        <div class="footer-print">
+        <span>{{ __('menu.dicetak_oleh') }}: {{ auth()->user()->name }}</span>
+        <span>{{ __('menu.tanggal_cetak') }}: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</span>
     </div>
+
 
 </div>
 
