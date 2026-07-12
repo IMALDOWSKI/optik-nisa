@@ -64,7 +64,8 @@
                 <th width="70">{{ __('menu.metode') }}</th>
                 <th width="70">{{ __('menu.tanggal') }}</th>
 
-                <th width="65">Status</th>
+                <th width="65">{{ __('menu.status') }}</th>
+
             </tr>
         </thead>
         <tbody>
