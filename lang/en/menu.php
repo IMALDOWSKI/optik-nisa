@@ -99,6 +99,14 @@ return [
     'belum_ada_transaksi'     => 'No transactions yet',
     'no_transaksi'           => 'No transactions in this period',
 'total_pendapatan_label' => 'Total Revenue',
-    'preview_cetak_laporan_transaksi' => 'Print Report Preview',
+'preview_cetak_laporan_transaksi' => 'Print Report Preview',
+
+    // Key untuk Export PDF Laporan Transaksi
+    'kode_transaksi' => 'Transaction Code',
+    'dicetak' => 'Printed',
+    'optik_nisa' => 'OPTIK NISA',
+    'transaksi_selesai' => 'Completed Transactions',
+    'frame_milik_pelanggan' => 'Customer Frame',
 ];
+
 
