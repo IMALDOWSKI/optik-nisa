@@ -38,29 +38,32 @@
 
     <div class="ringkasan">
         <div class="ringkasan-item">
-<div class="label">{{ __('menu.total_transaksi') }}</div>
+            <div class="label">{{ __('menu.total_transaksi') }}</div>
             <div class="value">{{ $transaksis->count() }}</div>
         </div>
+
         <div class="ringkasan-item">
         <div class="label">{{ __('menu.transaksi_selesai') }}</div>
             <div class="value">{{ $transaksis->where('status', 'selesai')->count() }}</div>
         </div>
         <div class="ringkasan-item">
-        <div class="label">{{ __('menu.total_pendapatan') ?? 'Total Pendapatan' }}</div>
+        <div class="label">{{ __('menu.total_pendapatan') }}</div>
             <div class="value">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
         </div>
+
     </div>
 
     <table>
         <thead>
             <tr>
                 <th width="25">{{ __('menu.no') }}</th>
-                <th width="120">Kode Transaksi</th>
-                <th width="100">Pelanggan</th>
-                <th>Produk</th>
-                <th width="90" style="text-align:right">Total</th>
-                <th width="70">Metode</th>
-                <th width="70">Tanggal</th>
+                <th width="120">{{ __('menu.kode_transaksi') }}</th>
+                <th width="100">{{ __('menu.pelanggan') }}</th>
+                <th>{{ __('menu.produk') }}</th>
+                <th width="90" style="text-align:right">{{ __('menu.total') }}</th>
+                <th width="70">{{ __('menu.metode') }}</th>
+                <th width="70">{{ __('menu.tanggal') }}</th>
+
                 <th width="65">Status</th>
             </tr>
         </thead>
@@ -74,7 +77,8 @@
                     @foreach($t->details as $d)
                         <div>
                             @if($d->is_frame_sendiri)
-                                Frame Milik Pelanggan{{ $d->keterangan_frame_sendiri ? ' ('.$d->keterangan_frame_sendiri.')' : '' }}
+                                {{ __('menu.frame_milik_pelanggan') }}{{ $d->keterangan_frame_sendiri ? ' ('.$d->keterangan_frame_sendiri.')' : '' }}
+
                             @else
                                 {{ $d->produk->nama_produk ?? '-' }} ({{ $d->jumlah }}x)
                             @endif
@@ -86,27 +90,30 @@
                 <td>{{ \Carbon\Carbon::parse($t->tanggal_transaksi)->format('d/m/Y') }}</td>
                 <td>
                     @if($t->status == 'selesai')
-                        <span class="badge-selesai">Selesai</span>
+                        <span class="badge-selesai">{{ __('menu.selesai') }}</span>
                     @elseif($t->status == 'pending')
-                        <span class="badge-pending">Pending</span>
+                        <span class="badge-pending">{{ __('menu.pending') }}</span>
                     @else
-                        <span class="badge-batal">Batal</span>
+                        <span class="badge-batal">{{ __('menu.dibatalkan') }}</span>
                     @endif
+
                 </td>
             </tr>
             @empty
             <tr>
                 <td colspan="8" style="text-align:center; padding: 20px; color: #888;">
-                    Tidak ada transaksi pada periode ini
+                    {{ __('menu.empty_laporan_transaksi') }}
                 </td>
+
             </tr>
             @endforelse
         </tbody>
         @if($transaksis->count() > 0)
         <tfoot>
             <tr>
-                <td colspan="4" style="text-align:right">Total Pendapatan (Transaksi Selesai):</td>
+                <td colspan="4" style="text-align:right">{{ __('menu.total_pendapatan') }} ({{ __('menu.transaksi_selesai') }}):</td>
                 <td style="text-align:right">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+
                 <td colspan="3"></td>
             </tr>
         </tfoot>
