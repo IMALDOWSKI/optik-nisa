@@ -122,7 +122,8 @@
     </table>
 
     <div class="footer">
-        OptiCore by IMALDOWSKI &copy; {{ date('Y') }}
+        {{ __('menu.optik_nisa') }}
+
     </div>
 
 </body>
