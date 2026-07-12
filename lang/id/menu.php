@@ -24,6 +24,23 @@ return [
     'laporan_kasir'     => 'Laporan Kasir',
     'laporan_keuangan'  => 'Laporan Keuangan',
     'laba_rugi'       => 'Laba Rugi',
+
+    // Laporan Kategori (i18n)
+    'laporan_per_kategori' => 'Laporan Per Kategori',
+    'detail_per_produk'    => 'Detail per Produk',
+    'filter'                => 'Filter',
+    'belum_ada_data_periode' => 'Belum ada data pada periode ini',
+    'bulan'                 => 'Bulan',
+    'tahun'                 => 'Tahun',
+    'kode'                  => 'Kode',
+    'nama_produk'          => 'Nama Produk',
+    'total_terjual'         => 'Total Terjual',
+    'total_pendapatan'      => 'Total Pendapatan',
+    'unit_terjual'          => 'unit terjual',
+    'transaksi'             => 'transaksi',
+    'kategori'              => 'Kategori',
+    'filter'                => 'Filter',
+
     'pengaturan'      => 'Pengaturan',
     'manajemen_user'  => 'Manajemen User',
     'activity_log'    => 'Activity Log',

@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
-        <i class="fas fa-tags mr-2"></i>Laporan Per Kategori
+        <i class="fas fa-tags mr-2"></i>{{ __('menu.laporan_per_kategori') }}
     </h1>
 </div>
 
@@ -68,7 +68,7 @@
 {{-- Detail per Produk --}}
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Detail per Produk</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('menu.detail_per_produk') }}</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -100,7 +100,7 @@
                     @empty
                     <tr>
                         <td colspan="6" class="text-center text-muted py-4">
-                            Belum ada data pada periode ini
+                            {{ __('menu.belum_ada_data_periode') }}
                         </td>
                     </tr>
                     @endforelse
