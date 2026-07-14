@@ -77,9 +77,8 @@
                 <td>
                     @foreach($t->details as $d)
                         <div>
-                            @if($d->is_frame_sendiri)
+                    @if($d->is_frame_sendiri)
                                 {{ __('menu.frame_milik_pelanggan') }}{{ $d->keterangan_frame_sendiri ? ' ('.$d->keterangan_frame_sendiri.')' : '' }}
-
                             @else
                                 {{ $d->produk->nama_produk ?? '-' }} ({{ $d->jumlah }}x)
                             @endif
