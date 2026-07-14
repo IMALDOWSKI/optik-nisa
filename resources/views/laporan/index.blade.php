@@ -6,17 +6,14 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{ __('menu.laporan_transaksi') }}</h1>
     <div>
-        <a href="{{ route('laporan.pdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+<a href="{{ route('laporan.pdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
            class="btn btn-danger btn-sm shadow-sm mr-2" target="_blank">
-
-        <i class="fas fa-file-pdf"></i> {{ __('menu.export_pdf') }}
-    </a>
+    <i class="fas fa-file-pdf"></i> {{ __('menu.export_pdf') }}
+</a>
 <a href="{{ route('laporan.csv', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
    class="btn btn-success btn-sm shadow-sm" target="_blank">
-<i class="fas fa-file-csv"></i> {{ __('menu.export_csv') }}
+    <i class="fas fa-file-csv"></i> {{ __('menu.export_csv') }}
 </a>
-
-        
 
         <a href="{{ route('laporan.print', ['bulan' => $bulan, 'tahun' => $tahun, 'status' => $status]) }}"
    target="_blank" class="btn btn-secondary btn-sm">
