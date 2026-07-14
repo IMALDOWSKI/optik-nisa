@@ -45,6 +45,11 @@ return [
     'total_pendapatan'      => 'Total Pendapatan',
     'unit_terjual'          => 'unit terjual',
     'transaksi'             => 'transaksi',
+    'unit'                  => 'unit',
+    'kosong'                => 'Tidak tersedia',
+    'total'                 => 'Total',
+
+    'transaksi'             => 'transaksi',
     'kategori'              => 'Kategori',
     'filter'                => 'Filter',
 

@@ -52,12 +52,12 @@
                 </div>
                 <div class="row no-gutters align-items-center">
                     <div class="col">
-                        <div class="h5 font-weight-bold text-gray-800 mb-0">
+                <div class="h5 font-weight-bold text-gray-800 mb-0">
                             Rp {{ number_format($d->total_pendapatan, 0, ',', '.') }}
                         </div>
                         <small class="text-muted">
-                            {{ $d->total_terjual }} unit terjual |
-                            {{ $d->total_transaksi }} transaksi
+                            {{ $d->total_terjual }} {{ __('menu.unit_terjual') }} |
+                            {{ $d->total_transaksi }} {{ __('menu.transaksi') }}
                         </small>
                     </div>
                 </div>
