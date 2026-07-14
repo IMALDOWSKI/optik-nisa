@@ -117,7 +117,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="bg-light font-weight-bold">
-                                <td>Total</td>
+                                <td>{{ __('menu.total') }}</td>
                                 <td>Rp {{ number_format($totalTahunIni, 0, ',', '.') }}</td>
                             </tr>
                         </tfoot>
