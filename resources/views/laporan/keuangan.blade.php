@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
+<h1 class="h3 mb-0 text-gray-800">
         <i class="fas fa-money-bill-wave mr-2"></i>{{ __('menu.laporan_keuangan_tahunan') }}
     </h1>
 </div>
