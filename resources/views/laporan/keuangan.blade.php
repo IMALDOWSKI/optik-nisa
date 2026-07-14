@@ -109,7 +109,7 @@
                                             Rp {{ number_format($nilai, 0, ',', '.') }}
                                         </span>
                                     @else
-                                        <span class="text-muted">-</span>
+                                        <span class="text-muted">{{ __('menu.kosong') }}</span>
                                     @endif
                                 </td>
                             </tr>
