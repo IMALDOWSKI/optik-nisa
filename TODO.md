@@ -1,4 +1,4 @@
-# TODO - OptikCore (blackboxai)
+UI/UX# TODO - OptikCore (blackboxai)
 
 ## Status: In progress
 
@@ -19,4 +19,10 @@
 - [x] i18n untuk teks statis export PDF/Print (resources/views/laporan/pdf.blade.php)
 - [x] Validasi syntax php -l
 - [x] Jalankan php artisan view:clear
+
+### No.4 Lanjutan (setelah No.3 selesai)
+- [ ] Rapikan hardcoded label sisa di resources/views/laporan/pdf.blade.php menjadi menu.* keys
+- [ ] Tambahkan key yang belum ada di lang/id/menu.php & lang/en/menu.php
+- [ ] Validasi syntax php -l & Jalankan php artisan view:clear
+- [ ] Commit + push
 

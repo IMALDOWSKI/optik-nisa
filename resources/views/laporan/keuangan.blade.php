@@ -18,7 +18,7 @@
                         <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>
                             {{ $y }}
                         </option>
-                    @endfor
+                  @endfor
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">
@@ -61,7 +61,7 @@
                     {{ __('menu.total_transaksi') }} {{ $tahun }}
                 </div>
                 <div class="h5 font-weight-bold text-gray-800">
-                    {{ $totalTransaksi }} Transaksi
+                    {{ $totalTransaksi }} {{ __('menu.transaksi') }}
                 </div>
             </div>
         </div>
@@ -95,8 +95,8 @@
                     <table class="table table-bordered mb-0">
                         <thead class="thead-light">
                             <tr>
-                                <th>Bulan</th>
-                                <th>Pendapatan</th>
+                                <th>{{ __('menu.bulan') }}</th>
+                                <th>{{ __('menu.pendapatan') }}</th>
                             </tr>
                         </thead>
                         <tbody>

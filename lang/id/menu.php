@@ -1,7 +1,14 @@
 <?php
 
 return [
-    'dashboard'       => 'Dashboard',
+'dashboard'       => 'Dashboard',
+
+    'nama_kasir'      => 'Nama Kasir',
+    'role'            => 'Role',
+    'rata_rata'      => 'Rata-rata',
+    'performa_kasir' => 'Performa Kasir',
+    'belum_ada_data_periode' => 'Belum ada data pada periode ini',
+    'transaksi'      => 'transaksi',
     'data_master'     => 'Data Master',
     'pengeluaran'     => 'Pengeluaran',
     'pelanggan'       => 'Pelanggan',
