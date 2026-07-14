@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Cetak Laporan Transaksi - Optik Nisa</title>
+    <title>{{ __('menu.laporan_transaksi_penjualan') }} - {{ __('menu.optik_nisa') }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -154,7 +154,7 @@
 <div class="laporan-container">
 
     <div class="kop">
-        <h2>OPTIK NISA</h2>
+        <h2>{{ __('menu.optik_nisa') }}</h2>
 
         <p>{{ __('menu.laporan_transaksi_penjualan') }}</p>
 
@@ -233,7 +233,7 @@
         @if($transaksis->count() > 0)
         <tfoot>
             <tr>
-                <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
+                <td colspan="5" class="text-right"><strong>{{ __('menu.total') }}</strong></td>
                 <td class="text-right"><strong>Rp {{ number_format($transaksis->sum('total_harga'), 0, ',', '.') }}</strong></td>
                 <td class="text-right"><strong>Rp {{ number_format($transaksis->sum('diskon'), 0, ',', '.') }}</strong></td>
                 <td class="text-right"><strong>Rp {{ number_format($transaksis->sum('grand_total'), 0, ',', '.') }}</strong></td>
