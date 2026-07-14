@@ -63,10 +63,10 @@
                     <tr>
                         <td>{{ $i + 1 }}</td>
                         <td>
-                            <strong>{{ $k->user->name ?? 'Unknown' }}</strong>
+                            <strong>{{ $k->user->name ?? __('menu.unknown') }}</strong>
                         </td>
 <td>
-    <strong>{{ $k->user?->name ?? 'Unknown (Transaksi Lama)' }}</strong>
+    <strong>{{ $k->user?->name ?? __('menu.unknown_transaksi_lama') }}</strong>
 </td>
 <td>
     <span class="badge badge-{{ ($k->user?->role ?? '') == 'admin' ? 'danger' : 'info' }}">
@@ -81,7 +81,7 @@
                     @empty
                     <tr>
                         <td colspan="7" class="text-center text-muted py-4">
-                            Belum ada data pada periode ini
+                            {{ __('menu.belum_ada_data_periode') }}
                         </td>
                     </tr>
                     @endforelse

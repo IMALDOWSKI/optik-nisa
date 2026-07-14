@@ -65,7 +65,11 @@ return [
     'pendapatan_hari_ini' => 'Pendapatan Hari Ini',
     'pendapatan_bulan_ini'=> 'Pendapatan Bulan Ini',
     'total_pelanggan'     => 'Total Pelanggan',
-    'total_produk'        => 'Total Produk',
+'total_produk'        => 'Total Produk',
+
+    // Laporan Kasir (default labels)
+    'unknown' => 'Tidak diketahui',
+    'unknown_transaksi_lama' => 'Transaksi lama',
 
     'laporan_keuangan_tahunan' => 'Laporan Keuangan Tahunan',
     'tampilkan'                => 'Tampilkan',

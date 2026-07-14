@@ -45,6 +45,10 @@ return [
     'total_diskon'             => 'Total Discounts',
     'total_pendapatan'        => 'Total Revenue',
 
+    // Laporan Kasir (default labels)
+    'unknown' => 'Unknown',
+    'unknown_transaksi_lama' => 'Old transactions',
+
     'grafik_pendapatan_per_bulan' => 'Revenue Chart per Month',
     'detail_per_bulan'            => 'Detail per Month',
     'pendapatan'                  => 'Revenue',
