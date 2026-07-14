@@ -33,8 +33,8 @@
                     @endfor
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i> Filter
+                <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> {{ __('menu.filter') }}
             </button>
         </form>
     </div>
