@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ app()->getLocale() }}">
+
 <head>
     <meta charset="UTF-8">
     <style>
