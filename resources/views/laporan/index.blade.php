@@ -145,7 +145,7 @@
                         <td>{{ \Carbon\Carbon::parse($t->tanggal_transaksi)->format('d/m/Y') }}</td>
                         <td>
                             <span class="badge badge-{{ $t->status == 'selesai' ? 'success' : ($t->status == 'pending' ? 'warning' : 'danger') }}">
-                                {{ ucfirst($t->status) }}
+                                {{ $t->status == 'selesai' ? __('menu.selesai') : ($t->status == 'pending' ? __('menu.pending') : __('menu.dibatalkan')) }}
                             </span>
                         </td>
                     </tr>
