@@ -110,7 +110,25 @@ return [
     'dicetak' => 'Printed',
     'optik_nisa' => 'OPTIK NISA',
     'transaksi_selesai' => 'Completed Transactions',
-    'frame_milik_pelanggan' => 'Customer Frame',
+'frame_milik_pelanggan' => 'Customer Frame',
+
+    // untuk label laporan transaksi (PDF)
+    'dicetak' => 'Printed',
+    'optik_nisa' => 'OPTIK NISA',
+    'dicetak_oleh' => 'Printed by',
+    'tanggal_cetak' => 'Print date',
+    'total_diskon_diberikan' => 'Total Discounts Given',
+    'total_transaksi' => 'Total Transactions',
+    'no_transaksi' => 'No transactions in this period',
+    'print_sekarang' => 'Print Now',
+    'kembali' => 'Back',
+    'preview_cetak_laporan_transaksi' => 'Print Report Preview',
+    'laporan_transaksi_penjualan' => 'Transaction Sales Report',
+    'total_pendapatan_label' => 'Total Revenue',
+    'transaksi_selesai' => 'Completed Transactions',
 ];
+
+
+
 
 
