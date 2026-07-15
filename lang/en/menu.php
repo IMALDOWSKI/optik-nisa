@@ -122,7 +122,7 @@ return [
     'preview_cetak_laporan_transaksi' => 'Print Report Preview',
     'laporan_transaksi_penjualan' => 'Transaction Sales Report',
     'total_pendapatan_label' => 'Total Revenue',
-    'transaksi_selesai' => 'Completed Transactions',
+
 
 ];
 
