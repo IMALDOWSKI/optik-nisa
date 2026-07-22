@@ -528,12 +528,12 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <a class="sidebar-brand d-flex align-items-center justify-content-center"
+<a class="sidebar-brand d-flex align-items-center justify-content-center"
            href="{{ route('dashboard') }}">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-glasses"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">OPTIK NISA</div>
+            <div class="sidebar-brand-text mx-3">{{ __('menu.optik_nisa') }}</div>
         </a>
 
         <hr class="sidebar-divider my-0">
@@ -796,9 +796,9 @@
         @endif
     </a>
     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
-        <h6 class="dropdown-header"
+<h6 class="dropdown-header"
             style="background: linear-gradient(135deg, #1a3a5c, #2d5f8a);">
-            Notifikasi
+            {{ __('menu.notifikasi') }}
         </h6>
         @forelse(\App\Models\Notifikasi::where('sudah_dibaca', false)->latest()->take(5)->get() as $n)
             <a class="dropdown-item d-flex align-items-center"
